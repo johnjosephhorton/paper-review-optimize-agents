@@ -8,6 +8,7 @@ location:
 source_job: "holistic"
 models_flagged: []
 category: "scope-and-limitations"
+related_issues: ["H001"]
 ---
 
 # Limited discussion of when AI agents might systematically fail

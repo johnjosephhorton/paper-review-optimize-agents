@@ -8,6 +8,7 @@ location:
 source_job: "holistic"
 models_flagged: []
 category: "scope-and-limitations"
+related_issues: ["H010"]
 ---
 
 # Theory-grounding requirement may be more restrictive than acknowledged
