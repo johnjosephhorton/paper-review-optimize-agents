@@ -1,0 +1,86 @@
+\subsection{\cite{1120Arad2012}'s 11-20 money request game}
+\label{sec:11-20_app}
+
+The level-$k$ model posits that players differ in how many steps ahead they consider when forming their strategies \citep{LkNagel1995,STAHL1994,STAHL1995}.
+The model defines different types of players, from level-$0$ to level-$k$. 
+Level-$0$ players use some predefined arbitrary decision rule, while level-$k$ players ($k \geq 1$) best respond assuming others are level-$(k-1)$ reasoners.
+Such a model highlights the idea that players' behavior depends not only on their decisions but also on their beliefs about how other people think.
+
+To measure the distribution of level-$k$ thinkers in human populations, AR developed the 11-20 game.
+The instructions are:
+\begin{quote}
+\vspace{-.5cm}
+\singlespacing
+\emph{You and another player are playing a game in which each player requests an amount of money. The amount must be (an integer) between 11 and 20 shekels.  Each player will receive the amount he requests. A player will receive an additional amount of 20 shekels if he asks for exactly one shekel less than the other player. What amount of money would you request?}
+\end{quote}
+This \emph{basic} version of the game clearly maps players' levels of reasoning to their choices.
+A natural starting point is to choose 20 shekels.
+This maximizes the guaranteed payment and provides an obvious starting point for level-0 thinking.
+Next, level-1 players, anticipating level-0 players, will choose 20, best respond by requesting 19 shekels to earn the bonus. 
+Level-2 players, expecting level-1 behavior, choose 18 shekels, and this pattern continues down to the minimum of 11.
+More generally, a player choosing $(20-k)$ shekels plausibly reveals themselves as a level-$k$ thinker.
+
+Interestingly, the 11-20 game does not have a pure strategy Nash equilibrium.
+The best response to any choice greater than 11 is to undercut the opponent by 1.
+But if the other player chooses 11, also selecting 11 is strictly dominated by every other strategy.
+The top row of Table~\ref{tab:AR_results} shows the unique symmetric mixed strategy Nash equilibrium for the game, with most of its density lying between 15 and 17 (levels 3 to 5).
+
+\begin{table}[h!]
+\caption{Original results from \cite{1120Arad2012}}
+\vspace{-.5cm}
+\begin{center}
+\begin{minipage}{1 \linewidth}
+\label{tab:AR_results}
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrrrrrr}
+\hline
+\textbf{Shekels Requested} & \textbf{11} & \textbf{12} & \textbf{13} & \textbf{14} & \textbf{15} & \textbf{16} & \textbf{17} & \textbf{18} & \textbf{19} & \textbf{20} \\
+\textbf{\boldmath{Level-$k$}} & \boldmath{$L9$} & \boldmath{$L8$} & \boldmath{$L7$} & \boldmath{$L6$} & \boldmath{$L5$} & \boldmath{$L4$} & \boldmath{$L3$} & \boldmath{$L2$} & \boldmath{$L1$} & \boldmath{$L0$} \\
+\hline
+\emph{Nash Eq. Prediction (\%)} & \emph{0} & \emph{0} & \emph{0} & \emph{0} & \emph{25} & \emph{25} & \emph{20} & \emph{15} & \emph{10} & \emph{5} \\
+Basic ($n = 108$) (\%)& 4 & 0 & 3 & 6 & 1 & 6 & 32 & 30 & 12 & 6 \\
+Cycle ($n = 72$) (\%)& 1 & 1 & 0 & 1 & 0 & 4 & 10 & 22 & 47 & 13 \\
+\hline
+\emph{Nash Eq. Prediction (\%)} & \emph{0} & \emph{0} & \emph{0} & \emph{10} & \emph{15} & \emph{15} & \emph{15} & \emph{15} & \emph{15} & \emph{15} \\
+Costless ($n = 53$) (\%)& 0 & 4 & 0 & 4 & 4 & 4 & 9 & 21 & 40 & 15 \\
+\hline
+\end{tabular*}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table reports the empirical PMFs for three versions of the 11-20 game from \citeauthor{1120Arad2012}. 
+In the basic version of this game, two players each request a number between 11-20 shekels and they receive that amount. 
+If a player requests exactly one less than their opponent, they win their request plus a 20 shekel bonus. 
+In the cycle version, players also receive a 20 shekel bonus if they select 20 and their opponent selects 11. 
+The costless version is identical to the basic version, except that players receive 17 shekels if they select any amount other than 20.
+The basic and cycle versions of the game share a unique symmetric mixed strategy Nash equilibrium, which is shown in the first row.
+The unique mixed strategy Nash equilibrium for the costless version is shown in the 4th row.
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+Table~\ref{tab:AR_results} also shows that when AR tested this game on pairs of college students, they deviated significantly from the Nash equilibrium (see row titled Basic).
+Most notably, 73\% of participants chose between 17 and 19 shekels, whereas only 45\% of the density for the mixed strategy Nash is on these values.
+
+Finally, Table~\ref{tab:AR_results} provides results from two additional variants of the game from AR.
+Both variants of the game still involve two players selecting numbers between 11 and 20.
+They differ from the basic version in their payouts (see Appendix~\ref{app:instruct} for the full instructions).
+In the \emph{cycle} version, players can earn a bonus of 20 shekels by undercutting the other's request by exactly one or by selecting 20 when the other selects 11. 
+This version has the same unique mixed strategy Nash Equilibrium as the basic game because the only affected strategy profiles are (20,11) and (11,20), which are outside the equilibrium support.
+However, if there is a distribution of level-$k$ thinkers---as opposed to perfectly rational game-theoretic best-responders---such a change might significantly impact play.
+
+The \emph{costless} version has the same bonus structure as the basic game, but with a different payout for choices below 20.
+Here, requesting 20 yields 20 shekels outright, while choosing a lower amount guarantees 17 shekels plus a 20-shekel bonus if the lower request is exactly one less than the other player's. 
+It is comparatively ``costless'' to continue undercutting.
+This game induces a symmetric mixed strategy Nash equilibrium that is more uniform across the choice set than the basic and cycle versions.
+
+The human responses from these game variants, also from a similar sample of college students, are noticeably shifted towards 18-20 shekels---even with the basic and cycle sharing the same equilibrium.
+AR attributes this to the increased salience and payoff of selecting a higher number.
+AR concluded that the collective results from these three experiments are best explained by a mix of strategic types consisting of level-0, level-1, level-2, level-3, and random choosers.
+
+The empirical human distributions from these three games comprise our training (the basic version) and validation (the costless and cycle versions) data.
+The games are distinct enough such that the human response distributions are different, but still all likely well-explained by similar underlying human choice processes.

@@ -1,0 +1,132 @@
+\section{External validity in pre-committed novel settings}
+\label{sec:ext-valid}
+
+We now turn to making guarantees about inference in novel settings.
+This is made possible when we have a pre-committed family of settings from which we can randomly sample.
+In particular, this framework allows us to compare the relative accuracy of two models in predicting human responses even for unsampled settings---where we have no previous data---within the same general domain.
+
+The setup is related to that of \cite{Hotz2005PredictingEfficacy}, \cite{Allcott2015Site}, and \cite{Dehejia2019External}, where treatment effects from various ``sites'' are used to evaluate the external validity of a given intervention at the population level.
+However, they assume a common underlying intervention---analogous to a single setting in our framework---across all sites.
+When there are heterogeneous interventions, only special instances with strong additional assumptions allow for appropriate inference.
+The following, which is very similar to the theoretical framework in \cite{andrews2025transfer}, requires no such assumptions.
+
+Let $X=\{x_{1},\dots,x_{M}\}$ denote the pool of candidate settings for which we wish to make predictions.
+$P(y|x)$ denotes the true human response distribution for $y \in Y$---the set of allowable responses.
+We define a predictive distribution for some flexible model $\theta$---an LLM, an economic model, etc.---as $\hat P_{\theta}(y|x)$.
+For a given setting $x$, the expected log-likelihood that the human distribution could have been produced by $\theta$ is
+\[
+\ell(x;\theta) = \mathbb{E}_{y\sim P(\cdot\mid x)}\bigl[\log\hat P_{\theta}(y|x)\bigr].
+\]
+Then the comparative predictive power of two models $\theta'$ and $\theta''$ can be measured via
+\begin{equation} \label{eq:ratio}
+  \Lambda(x) = \ell(x;\theta') - \ell(x;\theta'').
+\end{equation}
+A positive $\Lambda(x)$ means that $\theta'$ assigns more probability mass to the human responses than $\theta''$ for $x$.
+Averaging over all settings in $X$ yields the population estimand
+\begin{equation} \label{eq:avg-ratio}
+\bar{\Lambda} = \mathbb{E}_{x\sim\pi}\bigl[\Lambda(x)\bigr]
+\end{equation}
+where $\pi$ is some distribution over $X$.
+A positive $\bar{\Lambda}$ is interpreted as evidence that $\theta'$ is, on average, more predictive of human behavior than $\theta''$ across the entire population of $X$.
+
+Suppose we observe a sample $S=\{s_{1},\dots,s_{n}\}\subset X$ and, for each
+$s \in S$, independent human responses $y_s=(y_{s,1},\dots,y_{s,m_s})$.
+Identification to estimate equations~\ref{eq:ratio} and \ref{eq:avg-ratio} from these samples requires the following assumptions.
+
+\begin{assumption}  \label{ass:rand-settings}
+(Unconfounded settings).
+The observed settings $S=\{s_{1},\dots,s_{n}\}$ are randomly sampled from distribution $\pi$ with full support over $X$ such that $\pi(x)>0$ for all $x \in X$.
+\end{assumption}
+
+\begin{assumption}\label{ass:rand-humans}
+(Random assignment and within-setting independence).
+Humans are randomly assigned to settings in $S$.
+Human responses within a setting are independent draws from $P(y \mid s)$.
+\end{assumption}
+
+\begin{assumption} \label{ass:response-support}
+(Positivity and finite second moment).
+Whenever $P(y\mid x)>0$, then $\hat P_{\theta'}(y\mid x)>0$ and $\hat P_{\theta''}(y\mid x)>0$. 
+Moreover, $\mathbb{E}_{x\sim\pi}\bigl\{\mathbb{E}_{y\sim P(\cdot\mid x)}\bigl[(\log\hat P_{\theta'}(y\mid x) - \log\hat P_{\theta''}(y\mid x))^{2}\bigr]\bigr\} < \infty$.
+\end{assumption}
+
+The first two assumptions are basically identical to the assumptions of \emph{unconfounded location} and \emph{random assignment} in \citeauthor{Hotz2005PredictingEfficacy}.
+They are also very similar in spirit to Assumption 1 in \citeauthor{andrews2025transfer}.
+The first part of Assumption~\ref{ass:response-support} is similar to the covariate overlap assumption in causal inference; without it, some observed responses would have $\log 0$.
+The second portion of Assumption~\ref{ass:response-support} is a standard finite second-moment condition.
+
+For every setting $s \in S$, define the sample analogue to equation~\ref{eq:ratio} as:
+\begin{equation} \label{eq:sample-ratio}
+\hat\Lambda_{s}
+\;=\;
+\frac1{m_s}
+\sum_{j=1}^{m_s}
+\Bigl[\log\hat P_{\theta'}(y_{s,j}\mid s)
+-\log\hat P_{\theta''}(y_{s,j}\mid s)\Bigr].
+\end{equation}
+Aggregate across settings to produce the sample analogue to equation~\ref{eq:avg-ratio}:
+\begin{equation} \label{eq:sample-avg-ratio}
+\bar\Lambda_{S}
+\;=\;
+\frac1n\sum_{s \in S}\hat\Lambda_{s}.
+\end{equation}
+
+\begin{proposition}[Unbiasedness and asymptotic normality]
+\label{prop:sample-valid}
+Suppose Assumptions~\ref{ass:rand-settings}--\ref{ass:response-support} hold.
+Then
+\[
+\mathbb{E}[\bar{\Lambda}_{S}] = \bar{\Lambda}
+\quad \text{and} \quad
+\sqrt{n}\,(\bar{\Lambda}_{S}-\bar{\Lambda})
+\xrightarrow{d} \mathcal{N}\bigl(0,\sigma^{2}\bigr),
+\]
+where $
+\sigma^{2}
+= \operatorname{Var}_{x\sim\pi}\!\bigl[\Lambda(x)\bigr]
+\;+\;
+\mathbb{E}_{x\sim\pi}\!\Bigl[\tfrac{1}{m_x}\,V_x\Bigr]$ and 
+$V_x
+= \operatorname{Var}_{y \sim P(\cdot \mid x)}
+\bigl[\log\hat P_{\theta'}(y \mid x)
+-\log\hat P_{\theta''}( y\mid x)\bigr].$\footnote{\emph{Proof.} (Unbiasedness).
+For any setting $s$, Assumption~\ref{ass:rand-humans} implies $\mathbb{E}\bigl[\hat\Lambda_s \mid s\bigr]=\Lambda(s).$
+Hence $\mathbb{E}\bigl[\bar\Lambda_S \mid S\bigr] = \frac{1}{n}\sum_{s \in S}\Lambda(s).$
+Taking expectation over the i.i.d.\ draw of the settings (Assumption~\ref{ass:rand-settings}) yields $\mathbb{E}[\bar\Lambda_S]=\bar\Lambda.$
+(Asymptotic normality).
+The random variables $\{\hat\Lambda_s\}_{s \in S}$ are i.i.d. across settings with finite variance $
+\operatorname{Var}(\hat\Lambda_s)
+= \operatorname{Var}_{x\sim\pi}[\Lambda(x)]
++ \mathbb{E}_{x\sim\pi}
+\bigl[{\textstyle\frac{1}{m_x}}\,V_x\bigr]
+\;<\;\infty,$
+where the decomposition follows from the law of total variance and the independence of human draws within each setting.
+Because the moment condition in Assumption~\ref{ass:response-support} guarantees $V_x<\infty$, the central-limit theorem gives $\sqrt{n}\bigl(\bar\Lambda_S-\bar\Lambda\bigr)
+\;\xrightarrow{d}\;
+\mathcal N\bigl(0,\sigma^{2}\bigr).$
+(Regularity).
+By Assumption~\ref{ass:response-support},
+$\log\hat P_{\theta'}(y\mid x)$ and $\log\hat P_{\theta''}(y\mid x)$ are finite, so all moments used above exist.}
+\end{proposition}
+
+Notably, this does not rely on a large sample size of humans for any particular setting.
+The asymptotic variance in Proposition~\ref{prop:sample-valid} decomposes into two conceptually distinct parts.
+The first term, $\operatorname{Var}_{x\sim\pi}\bigl[\Lambda(x)\bigr]$, reflects heterogeneity in model performance across settings.
+The second term, $\mathbb{E}_{x\sim\pi}\bigl[\frac{1}{m_x}V_x\bigr]$, is sampling noise that arises because we estimate $\Lambda(x)$ with a finite number $m_x$ of human draws. 
+As long as $m_x\ge 1$, this component is finite. 
+Consequently, once a few human observations are obtained per setting, the precision of $\bar\Lambda_S$ is governed primarily by $n$ 
+because each setting contributes only a single observation $\hat\Lambda_s$.
+This also means there is no within-cluster correlation left to adjust for, so the standard sample variance estimator ($\hat{\sigma}^{2}\;=\;\frac{1}{n-1}\sum_{s\in S}\!\bigl(\hat{\Lambda}_{s}-\bar{\Lambda}_{S}\bigr)^{2}$) across settings already yields valid standard errors without needing to adjust for clustering.
+As such, standard $z$-tests or Wald confidence intervals follow immediately when estimating if $\bar\Lambda_S$ is significantly different from zero.
+
+Crucially, this construction imposes \emph{no assumption} that all settings share a single data-generating process.
+The settings can be an arbitrarily eclectic mixture---public goods games, dictator games, or entirely unrelated tasks.   
+Inference remains valid even when the model's performance differs sharply across sub-domains; the variability of estimates widens (or narrows) in proportion to the observed heterogeneity.
+
+The remainder of this section is devoted to implementing the above framework on a pre-committed family of strategic games.
+This set comprises \TotalGames{} novel and unique permutations of \citeauthor{1120Arad2012}'s money request game.
+We randomly sample \NGamesS{} of these games for human subjects and \aisub{s} to play in a preregistered experiment.
+We use this data to estimate the relative capacity of different \aisub{s} to predict human responses at scale.
+In particular, we return to the strategic sample of optimized level-$k$ \aisub{s} presented in Table~\ref{tab:persona} from Section~\ref{sec:predict_new_AR}.
+We compare these agents' ability to predict human responses across the \NGamesS{} games to the baseline AI, a cognitive hierarchy model, and symmetric Nash equilibria.
+Because the games (and human subjects) are randomly sampled from the population according to a known distribution, confidence intervals over the comparisons are valid over the \TotalGames{} games.

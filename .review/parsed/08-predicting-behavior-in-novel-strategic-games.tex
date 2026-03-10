@@ -1,0 +1,17 @@
+\section{Predicting behavior in novel strategic games}
+\label{sec:predict_new_AR}
+
+Thus far, we have argued that theory-grounded \persona{s}, validated on distinct but related datasets, offer an approach for predicting human responses in entirely novel settings.
+To empirically test the efficacy of our approach, we now turn to predicting human behavior in a set of strategic games adapted from \cite{1120Arad2012}'s (AR) study of strategic reasoning.
+
+We begin by briefly reviewing the level-$k$ model of strategic reasoning that originally motivated AR. 
+This model provides plausible theoretical underpinnings linking the training, testing, and novel games in this section.
+We then describe the structure of the original 11-20 money request game and outline our procedure for constructing theory-grounded \aisub{s}: optimizing their parameters on human data from AR's original experiment, and validating their predictive performance on distinct but related variants also studied by AR.
+Finally, we introduce an entirely new set of games adapted from AR's original design but featuring distinct numeric ranges and a novel participant sample recruited from Prolific. 
+Agents are evaluated on their ability to predict human behavior in these never-before-seen games. 
+
+Although this section focuses on strategic reasoning games, the same procedure can be applied in any setting.
+In Appendix \ref{app:predict_new_CR}, we replicate the process using the allocation games from \cite{charness2002understanding}, which explore social preferences.
+Two other important differences in that section are that we: (i) optimize across multiple related settings rather than a single training setting, and (ii) utilize the construction method to build agents.
+We also present an additional preregistered experiment with human subjects to validate these agents in new settings.
+

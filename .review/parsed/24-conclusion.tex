@@ -1,0 +1,62 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+The great promise of \aisub{s} lies in their potential to accurately predict human behavior in novel settings.
+Realizing this capability could transform social science research and public policy.
+It could provide the social science equivalent of a lab bench in the physical sciences: an accurate, scalable playground to test ideas before large-scale and expensive implementation with humans.\footnote{This could be even more powerful given the often-observed researcher inability to predict results of their own experiments \citep{predictscience2019DellaVigna,milkmanMegastudies2021,Gandhi2023Hypothetical,Gandhi2024EffectSize,Duckworth2025ZearnMega}.}
+Yet, with the current state-of-the-art foundation models, \aisub{s} are not yet reliable enough to be used in this way out of the box.
+
+In this paper, we explored an approach to address this shortcoming.
+Our approach relies on two key principles: (i) grounding candidate \aisub{s} in theories expected to drive human behavior in the target setting, and (ii) optimizing and then validating \aisub{s} in distinct but related settings presumed to be well-explained by the same theory.
+Without theoretical grounding, optimized \persona{s} may fail to meaningfully improve even in-sample predictions.
+Without validation across distinct but related datasets, optimized \persona{s} are prone to overfit a particular data-generating process.
+Just as economists carefully extend established theories to novel policy contexts---relying on accumulated empirical validation rather than absolute certainty---optimizing theoretically-grounded \aisub{s} to match samples of human data, and then validating them in distinct but related settings, provides a principled foundation for predicting humans in new settings.
+
+The improvements in predictive power yielded by this approach are substantial. 
+In four novel and preregistered strategic games derived from \citeauthor{1120Arad2012}'s 11-20 money request game, theory-grounded \aisub{s}, optimized and validated through our methodology, reduced prediction errors by approximately \MinPercImproveArad-\MaxPercImproveArad\% compared to baseline AI predictions. 
+Remarkably, these theory-grounded agents predicted initial play in some of the games better than the original human data from \citeauthor{1120Arad2012}. 
+Importantly, our results are not confined to games involving strategic reasoning.
+In Appendix \ref{app:predict_new_CR}, we apply the same procedure to the allocation games from \citeauthor{charness2002understanding}, and, using data from a preregistered experiment with entirely novel human responses, we find substantial improvements.
+
+Although this approach provides no statistical guarantees for arbitrary novel settings---indeed, no procedure can guarantee predictive power in entirely novel domains without a fully specified and correct causal model---we demonstrated that we can make externally valid inferences within a pre-committed family of settings.
+Using novel data from \SampleSizeHuman{} participants playing \SampleSizeGame{} games randomly sampled from a heterogeneous population of \TotalGames{} strategic games, we found that the strategic level-$k$ agents generalized effectively across this broad domain.
+In \OptGameAllMatchRate\% of games, all human subjects chose actions within the support of the optimized \aisub{} responses. 
+These general agents substantially outperformed the baseline AI off-the-shelf, a cognitive hierarchy model, and the Harsanyi-Selten equilibria.
+
+The results were also robust to several alternative specifications and were consistent across different game structures.
+Because the games were randomly sampled under the assumptions stated in Section~\ref{sec:estimation}, these results are externally valid for the entire population of \TotalGames{} games.
+While we can only guarantee validity within this specific population and sampling distribution, the strong performance of theoretically motivated \aisub{s} across such a diverse set of strategic games suggests that similar approaches would likely generalize to alternative distributions and even other strategic games.
+
+Looking ahead, researchers could leverage this approach by identifying broad domains where they need predictions and can obtain training and validation data from representative subsets---even if there is substantial structural variation within the domain.
+Indeed, a key advantage of \aisub{s} is that they can make predictions in response to any setting expressed in natural language without any prior data.
+This is often not possible with traditional machine learning methods and economic models.
+
+Another exciting research direction would be to automate the theory-prediction-testing loop.
+Such a system would start with novel human data and relevant experimental settings, iteratively generate theory-informed candidate personas, optimize their parameters, and systematically evaluate their generalizability across samples.
+One can also imagine just starting with a novel setting, and then having an AI system actually search for the relevant training and validation data to execute our approach.
+Recent research supports the feasibility of these ideas \citep{Jackson2025Mixture,zhu2025ExplPredicting}.
+In particular, \cite{Manning2024Automated} demonstrate AI systems capable of automating the full social scientific workflow---from hypothesis generation to experimental simulation and data analysis.
+
+More generally, the results in this paper linking theory-grounded \aisub{s} to robust generalizability in novel settings, and atheoretical \aisub{s} to failure, are notable for reasons beyond prediction \citep{hofman2021integrating}.
+They suggest that the underlying LLM has correctly learned the relevant relationships between the \aisub{s} and human responses to the given setting.
+This is even more notable given that it is highly unlikely that these mappings were explicitly specified during training.  
+Such a finding aligns with recent evidence that LLMs form rich internal representations of their human-generated training corpus rather than merely memorizing it \citep{lindsey2025biology, ameisen2025circuit}.
+If true for LLMs and human behavior more generally, our \persona{}-alignment-generalizability exercises may offer more than improved predictive power.
+If an LLM armed with a particular theory-grounded \persona{} matches human data particularly well across a wide range of related settings, it might be evidence that the theory has a lot of explanatory power for the underlying human sample.
+Building on a young social scientific literature \citep{peterson2021lottery,hirasawa2022using,EnkeComplexity2023,Si2024NovelResearch,MLhypothesis2024,Ashesh2024Anomaly,batista2024words,movva2025sparse}, this could, in turn, provide researchers with robust machine learning methods to rapidly and efficiently inform promising new hypotheses.
+
+\newpage \clearpage
+
+\bibliographystyle{ecta}
+\bibliography{optimize}
+
+\newpage \clearpage
+
+\appendix
+
+\renewcommand{\thefigure}{A\arabic{figure}} 
+\setcounter{figure}{0}  
+
+\renewcommand{\thetable}{A\arabic{table}} 
+\setcounter{table}{0}  
+

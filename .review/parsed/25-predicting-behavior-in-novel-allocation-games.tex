@@ -1,0 +1,16 @@
+\section{Predicting behavior in novel allocation games}
+\label{app:predict_new_CR}
+
+We further test the robustness of our approach by predicting human behavior on a set of novel allocation games.
+Unlike the strategic reasoning games studied in Sections~\ref{sec:predict_new_AR} and \ref{sec:ext-valid}, these games---adapted from \cite{charness2002understanding}'s (CR) experiments on social preferences---require individuals to balance their own monetary payoffs against those of others. 
+They offer a distinct theoretical and empirical context for validating the generalizability of \persona{s} identified using our approach.
+In addition to this new context, there are two key technical differences from the previous section.
+First, samples of agents are optimized over several training settings simultaneously.
+This further decreases the likelihood of overfitting on idiosyncratic features of any particular setting.
+Second, we employ the novel construction method and parameterize a prompt template to optimize the agents in-sample.
+
+We follow the same analytical structure and use similar notation as in Section~\ref{sec:predict_new_AR}.
+We first briefly describe the dictator settings originally explored by CR, as these form our training dataset. 
+Next, we detail our procedure for optimizing samples of \aisub{s}, where the motivating theory is drawn directly from the social-preference models in CR. 
+We then validate these subjects on a distinct set of two-player games studied by CR and demonstrate the pitfalls of optimizing over atheoretical \persona{s}.
+Finally, we introduce a new series of structurally distinct three-player allocation games and use them to illustrate the empirical efficacy of our approach in novel games that were not in the LLM's training corpus.

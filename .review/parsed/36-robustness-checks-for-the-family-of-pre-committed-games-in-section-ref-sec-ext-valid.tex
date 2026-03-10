@@ -1,0 +1,277 @@
+\subsection{Robustness checks for the family of pre-committed games in Section~\ref{sec:ext-valid}}
+\label{app:robustness_checks}
+
+\begin{table}[h!]
+\begin{center}
+\caption{Summary statistics for absolute predictive accuracy of different models ($\varepsilon = 0$).} 
+\label{tab:match_rates}
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\input{tables/abs_stats_table.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table reports summary statistics for the absolute predictive accuracy of different models in Section~\ref{sec:ext-valid}.
+These are the raw results without any smoothing.
+The first row corresponds to the proportion of human subjects who chose the most likely strategy for the given model in the columns.
+The second row corresponds to the proportion of human subjects who chose the top 3 most likely strategies for the given model in the columns.
+The third is the proportion of human subjects who chose a strategy with a positive probability for the given model in the columns.
+The fourth is the proportion of games in which any human chose a strategy with a positive probability for the given model in the columns.
+The fifth is the proportion of games in which all humans chose a strategy with a positive probability for the given model in the columns.
+Note that the cognitive hierarchy model, by design, provides positive probability for all strategies (even without smoothing) because the level-$0$ player chooses uniformly at random.
+None of the other models has this feature.
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+  
+
+\begin{table}[h!]
+\begin{center}
+\caption{Statistical tests comparing strategic \aisub{s} vs other models ($\varepsilon = 0.05$)} \label{tab:stat_bounds_05}
+\scriptsize
+\input{tables/prop_ll_stats_05.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table shows the results of the statistical tests comparing the strategic \aisub{s} to the other models for $\varepsilon = 0.05$.
+No smoothing is applied to the cognitive hierarchy model.
+The first column shows the comparison model.
+The second presents $\bar \Lambda_S$ with bootstrap confidence intervals comparing the strategic \aisub{s} to the other models.
+The third and fourth columns present p-values for the Wilcoxon signed-rank test and random-sign permutation test, respectively.
+The fifth column presents the proportion of games for which the strategic \aisub{s} is the best predictor with its 95\% Clopper-Pearson interval. \starlanguage
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\caption{Statistical tests comparing optimized vs other models ($\varepsilon = 0.1$)} \label{tab:stat_bounds_10}
+\scriptsize
+\input{tables/prop_ll_stats_10.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table shows the results of the statistical tests comparing the strategic \aisub{s} to the other models for $\varepsilon = 0.1$.
+No smoothing is applied to the cognitive hierarchy model.
+The first column shows the comparison model.
+The second presents $\bar \Lambda_S$ with bootstrap confidence intervals comparing the strategic \aisub{s} to the other models.
+The third and fourth columns present p-values for the Wilcoxon signed-rank test and random-sign permutation test, respectively.
+The fifth column presents the proportion of games for which the strategic \aisub{s} is the best predictor with its 95\% Clopper-Pearson interval. \starlanguage
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\caption{Statistical tests comparing optimized vs other models ($\varepsilon = 0.2$)} \label{tab:stat_bounds_20}
+\scriptsize
+\input{tables/prop_ll_stats_20.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table shows the results of the statistical tests comparing the strategic \aisub{s} to the other models for $\varepsilon = 0.2$.
+No smoothing is applied to the cognitive hierarchy model.
+The first column shows the comparison model.
+The second presents $\bar \Lambda_S$ with bootstrap confidence intervals comparing the strategic \aisub{s} to the other models.
+The third and fourth columns present p-values for the Wilcoxon signed-rank test and random-sign permutation test, respectively.
+The fifth column presents the proportion of games for which the strategic \aisub{s} is the best predictor with its 95\% Clopper-Pearson interval. \starlanguage
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\caption{Statistical tests comparing optimized vs other models ($\varepsilon = 0.3$)} \label{tab:stat_bounds_30}
+\scriptsize
+\input{tables/prop_ll_stats_30.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table shows the results of the statistical tests comparing the strategic \aisub{s} to the other models for $\varepsilon = 0.3$.
+No smoothing is applied to the cognitive hierarchy model.
+The first column shows the comparison model.
+The second presents $\bar \Lambda_S$ with bootstrap confidence intervals comparing the strategic \aisub{s} to the other models.
+The third and fourth columns present p-values for the Wilcoxon signed-rank test and random-sign permutation test, respectively.
+The fifth column presents the proportion of games for which the strategic \aisub{s} is the best predictor with its 95\% Clopper-Pearson interval. \starlanguage
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Relative predictive accuracy of the strategic \aisub{} vs other models for different game types ($\varepsilon = 0.05$)} 
+\label{fig:game_level_plots_eps_005}
+\vspace*{-0.1in}
+\includegraphics[width=\textwidth]{plots/game_level_plots_eps_005.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This figure shows the proportion of games for which strategic \aisub{s} are the best predictor of initial play, separated by bonus rule (top panel) and points rule (bottom panel). 
+All distributions except the cognitive hierarchy model are smoothed with $\varepsilon = 0.05$. 
+The vertical dashed line represents equal performance (50-50 split). 
+Green indicates that strategic \aisub{} significantly outperforms the reference model in more than 50\% of games, red indicates significantly worse performance in more than 50\% of games, and grey indicates no significant difference. 
+Error bars show 95\% Clopper-Pearson confidence intervals.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Relative predictive accuracy of the strategic \aisub{} vs other models for different game types ($\varepsilon = 0.1$)} 
+\label{fig:game_level_plots_eps_01}
+\vspace*{-0.1in}
+\includegraphics[width=\textwidth]{plots/game_level_plots_eps_01.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This figure shows the proportion of games for which strategic \aisub{s} are the best predictor of initial play, separated by bonus rule (top panel) and points rule (bottom panel). 
+All distributions except the cognitive hierarchy model are smoothed with $\varepsilon = 0.1$.
+The vertical dashed line represents equal performance (50-50 split). 
+Green indicates that strategic \aisub{} significantly outperforms the reference model in more than 50\% of games, red indicates significantly worse performance in more than 50\% of games, and grey indicates no significant difference. 
+Error bars show 95\% Clopper-Pearson confidence intervals.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Relative predictive accuracy of the strategic \aisub{} vs other models for different game types ($\varepsilon = 0.2$)} 
+\label{fig:game_level_plots_eps_02}
+\vspace*{-0.1in}
+\includegraphics[width=\textwidth]{plots/game_level_plots_eps_02.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This figure shows the proportion of games for which strategic \aisub{s} are the best predictor of initial play, separated by bonus rule (top panel) and points rule (bottom panel). 
+All distributions except the cognitive hierarchy model are smoothed with $\varepsilon = 0.2$.
+The vertical dashed line represents equal performance (50-50 split). Green indicates that strategic \aisub{} significantly outperforms the reference model in more than 50\% of games, red indicates significantly worse performance in more than 50\% of games, and grey indicates no significant difference. 
+Error bars show 95\% Clopper-Pearson confidence intervals.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Relative predictive accuracy of the strategic \aisub{} vs other models for different game types ($\varepsilon = 0.3$)} 
+\label{fig:game_level_plots_eps_03}
+\vspace*{-0.1in}
+\includegraphics[width=\textwidth]{plots/game_level_plots_eps_03.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This figure shows the proportion of games for which strategic \aisub{s} are the best predictor of initial play, separated by bonus rule (top panel) and points rule (bottom panel). 
+All distributions except the cognitive hierarchy model are smoothed with $\varepsilon = 0.3$.
+The vertical dashed line represents equal performance (50-50 split). Green indicates that strategic \aisub{} significantly outperforms the reference model in more than 50\% of games, red indicates significantly worse performance in more than 50\% of games, and grey indicates no significant difference. 
+Error bars show 95\% Clopper-Pearson confidence intervals.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+\newpage \clearpage
+
+\begin{table}[h!] 
+\begin{center}
+\begin{minipage}{1 \linewidth}                          
+\caption{Log-likelihood ratio regressions across game types ($\varepsilon = 0.05$)}  
+\label{tab:game_level_eps_005}     
+\centering                                                  
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\input{tables/game_level_eps_005.tex}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} Each column reports regression estimates where the dependent variable is the log-likelihood ratio of the strategic \aisub{} to the other models.
+The independent variables are the game features from Table~\ref{tab:game_parameters} (excluding the bonus rule and points rule).
+We report heteroskedasticity-robust standard errors.
+\starlanguage{}
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{table}[h!] 
+\begin{center}
+\begin{minipage}{1 \linewidth}                          
+\caption{Log-likelihood ratio regressions across game types ($\varepsilon = 0.1$)}  
+\label{tab:game_level_eps_01}     
+\centering                                                
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\input{tables/game_level_eps_01.tex}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} Each column reports regression estimates where the dependent variable is the log-likelihood ratio of the strategic \aisub{} to the other models.
+The independent variables are the game features from Table~\ref{tab:game_parameters} (excluding the bonus rule and points rule).
+We report heteroskedasticity-robust standard errors.
+\starlanguage{}
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{table}[h!] 
+\begin{center}
+\begin{minipage}{1 \linewidth}                          
+\caption{Log-likelihood ratio regressions across game types ($\varepsilon = 0.2$)}  
+\label{tab:game_level_eps_02}     
+\centering                                            
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\input{tables/game_level_eps_02.tex}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} Each column reports regression estimates where the dependent variable is the log-likelihood ratio of the strategic \aisub{} to the other models.
+The independent variables are the game features from Table~\ref{tab:game_parameters} (excluding the bonus rule and points rule).
+We report heteroskedasticity-robust standard errors.
+\starlanguage{}
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{table}[h!] 
+\begin{center}
+\begin{minipage}{1 \linewidth}                          
+\caption{Log-likelihood ratio regressions across game types ($\varepsilon = 0.3$)}  
+\label{tab:game_level_eps_03}     
+\centering                                           
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\input{tables/game_level_eps_03.tex}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} Each column reports regression estimates where the dependent variable is the log-likelihood ratio of the strategic \aisub{} to the other models.
+The independent variables are the game features from Table~\ref{tab:game_parameters} (excluding the bonus rule and points rule).
+We report heteroskedasticity-robust standard errors.
+\starlanguage{}
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+

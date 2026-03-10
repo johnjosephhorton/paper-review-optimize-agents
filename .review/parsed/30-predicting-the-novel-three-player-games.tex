@@ -1,0 +1,157 @@
+\subsection{Predicting the novel three-player games}
+\label{sec:cr_novel}
+
+We conclude this section by introducing a set of 8 novel three-player allocation games to evaluate $\bm{\theta}^*$ and $\bm{\theta}_{ath}^*$ in new settings with a new participant pool.
+We recruited $n = \NNCRovel$ participants from Prolific to make three allocation decisions drawn from eight distinct settings, each involving a choice between two monetary allocations.
+Participants were paid \$1.00 and could earn a bonus of up to an additional \$1.00, depending on their own or others' choices. 
+A representative setting is:
+$$
+\begin{array}{cc}
+\mathbf{\textbf{Option A: }} \begin{cases}
+\$1.00 & \text{To Selected} \\
+\$0.75 & \text{To Each Other Player}
+\end{cases}
+&
+\quad\quad
+\mathbf{\textbf{Option B: }} \begin{cases}
+\$0.50 & \text{To Selected} \\
+\$1.00 & \text{To Each Other Player}
+\end{cases}
+\end{array}
+$$
+After completion, one of the three decisions was randomly selected for payment. 
+Participants were then randomly grouped into triads, with one member randomly chosen as the Selected Player. 
+All three members received bonuses according to the allocation chosen by their group's Selected Player.\footnote{Suppose you, the reader, are completing this task and choose option A in the above setting.
+If after the survey is completed, the decision above is selected for payment and you are randomly chosen as the Selected Player, you will receive a \$1.00 bonus, and the other two players each receive an extra \$0.75.
+However, if another player was chosen as the Selected Player and they had picked Option A, then you would receive a \$0.75 bonus payment.}
+Multiple attention checks confirmed participants understood the instructions and the payoffs.
+Participants' decisions only determined payments if they were the Selected Player.
+Uncertainty over selection aimed to ensure that choices reflected genuine social preferences.
+
+The entire experimental design---including settings, procedures, and the optimized \aisub{} parameters---was preregistered prior to data collection with human participants.
+Figure~\ref{fig:novel_allocation_pic} in Appendix~\ref{app:instruct} shows the full instructions for an example setting.
+To the best of our knowledge, games with these exact payoffs have never been used in an experiment with publicly available data.\footnote{CR tested some 3-player games, but these had different payoffs, bonus rules, and involved imperfect information.}
+
+Figure~\ref{fig:novel_cr_a} shows the results for all four subject samples: human participants (black), baseline \aisub{s} (red), theory-grounded \aisub{s} ($\bm{\theta}^*$ in blue), and atheoretical \aisub{s} ($\bm{\theta}_{ath}^*$ in yellow). 
+Each column corresponds to a setting with the relevant options indicated, with the y-axis indicating the proportion of subjects choosing Option A. 
+
+\begin{figure}[h!]
+\begin{center}
+\caption{Results from the novel three-player allocation games}
+\vspace*{-0.12in}
+\label{fig:novel_cr}
+
+\begin{subfigure}{\textwidth}  
+\refstepcounter{subfigure}\label{fig:novel_cr_a}
+\centering
+\begin{overpic}[width=.95\textwidth]{plots/novel_cr_raw.pdf}
+\put(-1,35){\large\bfseries (a)}
+\end{overpic}
+\end{subfigure}
+
+\begin{subfigure}{\textwidth}
+\refstepcounter{subfigure}\label{fig:novel_cr_b}
+\centering
+\begin{overpic}[width=.95\textwidth]{plots/novel_cr_diff.pdf}
+\put(-1,40){\large\bfseries (b)}
+\end{overpic}
+\end{subfigure}
+
+\end{center}
+\vspace*{-0.2in}
+\begin{footnotesize}
+\begin{singlespace}
+\textit{Notes:} Panel (a) shows the proportion of choices for Option A across eight novel three-player allocation settings. Human responses are depicted in black (with the dashed lines), baseline AI in red, theoretically motivated AI in blue, and atheoretical AI in yellow. Error bars indicate 95\% Wilson confidence intervals. Panel (b) presents the absolute error between human and AI choices across the settings, with dashed lines marking the MAE.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+Human responses generally reflect a fairly even split between options, except for the extreme setting 8, where participants unanimously select Option A.
+The baseline AI consistently diverges from human behavior, disproportionately favoring Option B in nearly every setting (MAE = \CRBaselineNovelMAE).
+Atheoretical \aisub{s} offer no relative improvement, with a slightly worse fit (MAE = \CRAtheoryNovelMAE).
+
+On average, $\bm{\theta}^*$ better approximates human choices across settings (MAE = \CRTheoryNovelMAE)---about \CRPercImprove\% less than the baseline.
+This improvement is emphasized in Figure~\ref{fig:novel_cr_b}, showing the per-game absolute error along with the MAE.
+Importantly, this performance improvement is not driven by a few outliers: the theoretically motivated sample matches or exceeds both baseline and atheoretical \aisub{s} in five settings.
+And in the games where the baseline AI and atheoretical \aisub{s} are better, the difference is not large.
+
+As with the results in Section~\ref{sec:predict_new_AR}, these findings demonstrate that theoretically grounded \aisub{s}, optimized and then validated on data from related but distinct data-generating processes, can significantly improve the predictive power of AI simulations in novel settings.
+
+
+\begin{table}[h!]
+\caption{Human subjects results for two-person response games in \cite{charness2002understanding}}
+\label{tab:cr_games_results}
+\begin{center}
+\footnotesize
+\begin{tabular}{llcccc}
+\hline
+& & \multicolumn{4}{c}{Human Subject Responses} \\
+Game & Description & Out & Enter & Left & Right \\
+\hline
+\\[-1.8ex]
+\multicolumn{6}{l}{\textit{Panel A: B's payoffs identical}} \\[0.5ex]
+Barc7 & A chooses (750,0) or lets B choose & .47 & .53 & .06 & .94 \\
+& (400,400) vs. (750,400) & & & & \\
+Barc5 & A chooses (550,550) or lets B choose & .39 & .61 & .33 & .67 \\
+& (400,400) vs. (750,400) & & & & \\
+Berk28 & A chooses (100,1000) or lets B choose & .50 & .50 & .34 & .66 \\
+& (75,125) vs. (125,125) & & & & \\
+Berk32 & A chooses (450,900) or lets B choose & .85 & .15 & .35 & .65 \\
+& (200,400) vs. (400,400) & & & & \\[1ex]
+
+\multicolumn{6}{l}{\textit{Panel B: B's sacrifice helps A}} \\[0.5ex]
+Barc3 & A chooses (725,0) or lets B choose & .74 & .26 & .62 & .38 \\
+& (400,400) vs. (750,375) & & & & \\
+Barc4 & A chooses (800,0) or lets B choose & .83 & .17 & .62 & .38 \\
+& (400,400) vs. (750,375) & & & & \\
+Berk21 & A chooses (750,0) or lets B choose & .47 & .53 & .61 & .39 \\
+& (400,400) vs. (750,375) & & & & \\
+Barc6 & A chooses (750,100) or lets B choose & .92 & .08 & .75 & .25 \\
+& (300,600) vs. (700,500) & & & & \\
+Barc9 & A chooses (450,0) or lets B choose & .69 & .31 & .94 & .06 \\
+& (350,450) vs. (450,350) & & & & \\
+Berk25 & A chooses (450,0) or lets B choose & .62 & .38 & .81 & .19 \\
+& (350,450) vs. (450,350) & & & & \\
+Berk19 & A chooses (700,200) or lets B choose & .56 & .44 & .22 & .78 \\
+& (200,700) vs. (600,600) & & & & \\
+Berk14 & A chooses (800,0) or lets B choose & .68 & .32 & .45 & .55 \\
+& (0,800) vs. (400,400) & & & & \\
+Barc1 & A chooses (550,550) or lets B choose & .96 & .04 & .93 & .07 \\
+& (400,400) vs. (750,375) & & & & \\
+Berk13 & A chooses (550,550) or lets B choose & .86 & .14 & .82 & .18 \\
+& (400,400) vs. (750,375) & & & & \\
+Berk18 & A chooses (0,800) or lets B choose & .00 & 1.00 & .44 & .56 \\
+& (0,800) vs. (400,400) & & & & \\[1ex]
+
+\multicolumn{6}{l}{\textit{Panel C: B's sacrifice hurts A}} \\[0.5ex]
+Barc11 & A chooses (375,1000) or lets B choose & .54 & .46 & .89 & .11 \\
+& (400,400) vs. (350,350) & & & & \\
+Berk22 & A chooses (375,1000) or lets B choose & .39 & .61 & .97 & .03 \\
+& (400,400) vs. (250,350) & & & & \\
+Berk27 & A chooses (500,500) or lets B choose & .41 & .59 & .91 & .09 \\
+& (800,200) vs. (0,0) & & & & \\
+Berk31 & A chooses (750,750) or lets B choose & .73 & .27 & .88 & .12 \\
+& (800,200) vs. (0,0) & & & & \\
+Berk30 & A chooses (400,1200) or lets B choose & .77 & .23 & .88 & .12 \\
+& (400,200) vs. (0,0) & & & & \\
+\hline
+\end{tabular}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\textit{Notes:} This table presents the complete set of two-person response games from \citeauthor{charness2002understanding} along with human subject responses. 
+This figure is identical to the one they show in the original paper.
+For each game, we show the proportion of subjects choosing each option. ''Out'' and ''Enter'' refer to Person A's initial choice, while ''Left'' and ''Right'' refer to Person B's choice if given the opportunity. All payoff values are in experimental currency units.
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+  
+\newpage \clearpage
+
+\renewcommand{\thefigure}{B\arabic{figure}} 
+\setcounter{figure}{0}  
+
+\renewcommand{\thetable}{B\arabic{table}} 
+\setcounter{table}{0}  
+

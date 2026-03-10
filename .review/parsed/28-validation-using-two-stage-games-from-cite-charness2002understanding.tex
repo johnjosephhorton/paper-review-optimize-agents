@@ -1,0 +1,53 @@
+\subsection{Validation using two-stage games from \cite{charness2002understanding}}
+\label{sec:validate_prompt}
+
+To validate whether $\bm{\theta}^*$ generalizes to new games, we apply the same prompt template and the values to a new set of more complicated sequential two-stage games from CR---the test set.
+Like the validation variants from AR (costless and cycle), these games are plausibly driven by similar underlying mechanisms as the training games, but are still different enough to provide a nontrivial test of generalization.
+In the first stage, Person A chooses either a given allocation or lets Person B choose one of two other known allocations.
+Person B chooses an allocation but is not informed of Person A's choice---until the payoffs are realized.
+For example, in one game, players are shown the following options:
+\begin{quote}
+Stage 1 (Person A chooses): $\underbrace{(\underbrace{500}_{\mbox{To A}}\:, \:\underbrace{500}_{\mbox{To B}})}_{\mbox{``Left''}}$ $\quad$ vs. $\quad$  $\underbrace{\underbrace{(400\:\:,\:600)\:\text{    vs.  }(700\:\:,\: 300)}_{\mbox{Let Person B choose}}}_{\mbox{``Right''}}$.
+\end{quote}
+\begin{quote}
+Stage 2  (Person B chooses): $\underbrace{(\underbrace{400}_{\mbox{To A}}\:,\: \underbrace{600}_{\mbox{To B}})}_{\mbox{``Left''}}$ $\quad$ vs. $\quad$ $\underbrace{(\underbrace{700}_{\mbox{To A}}\:,\: \underbrace{300}_{\mbox{To B}})}_{\mbox{``Right''}}$.
+\end{quote}
+Table~\ref{tab:cr_games_results} in Appendix~\ref{app:figs} provides all 20 versions of these two-stage games (each with a different set of payoffs), along with the human results from CR.
+
+As a baseline, we elicit \textsc{Gpt-4o's} responses to these 20 games 150 times each with the temperature set to 1.
+We then do the same for the theory-grounded sample $\bm{\theta}^*$---each of the three agents in the mixture plays each game 50 times.
+
+Figure~\ref{fig:cr_test} shows the results. 
+The top row shows the responses for the \aisub{s} as Person A, and the bottom row for Person B.
+Each column corresponds to a different sample of subjects.
+The x-axis shows the setting name and the y-axis shows the mean absolute difference between the fraction of \aisub{s} choosing ``Left'' and the fraction of human subjects choosing ``Left'' in \citeauthor{charness2002understanding}.
+The difference between the baseline (red) and selected \aisub{s} (blue) is substantial.
+The MAE between the baseline and the human subjects as Player A (\CRTestBaselineGameAMAE) is three times larger than that for the optimized agents relative to the humans (\CRTestOptGameAMAE).
+The difference in MAE is twice as large for Player B (\CRTestBaselineGameBMAE{} vs. \CRTestOptGameBMAE).
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Distances between human and \aisub{s} for the two-stage dictator games} 
+\label{fig:cr_test}
+\vspace*{-0.15in}
+\centering
+\includegraphics[width=.9\textwidth]{plots/cr_bilater_dict.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:}
+This figure reports the results of replications of the sequential two-player games from \cite{charness2002understanding} with \aisub{s}.
+Each row shows responses from either Person A (left) or Person B (right), while each column corresponds to a different set of subjects. 
+The x-axis shows the game, and the y-axis shows the mean absolute difference between the fraction of \aisub{s} choosing ``Left'' and the fraction of human subjects choosing ``Left'' in \citeauthor{charness2002understanding}.
+The left column displays the baseline \aisub{s} (red), the middle column is the selected \aisub{s} (blue), and the right column shows the atheoretical \aisub{s} (yellow).  
+The horizontal dashed lines show the mean absolute error in each pane.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+This predictive improvement is robust across settings.
+In $\CRTestNOptBetterThanBaseline$ of the 40 total decisions (20 settings, each played as Person A and Person B), the optimized theory-grounded agents more accurately matched human behavior than the baseline AI. 
+Never was the absolute error in a game larger than 0.50 for the optimized theory-grounded agents, which is less than the MAE for the baseline AI as player A.

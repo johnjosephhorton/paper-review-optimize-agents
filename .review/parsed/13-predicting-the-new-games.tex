@@ -1,0 +1,89 @@
+\subsection{Predicting the new games}
+\label{sec:predict_new_games}
+
+We now introduce the four novel strategic games.
+To the best of our knowledge, these games are not in the LLM's training corpus, thus providing a stringent testing ground for the \aisub{s} we have explored so far.
+Three of the games parallel AR's games in strategic structure but modify the implementation: participants choose between 1 and 10 (rather than 11 and 20) and earn points instead of shekels.
+The instructions for the ``basic'' version of this 1-10 game highlight these differences:
+\begin{quote}
+\vspace{-.5cm}
+\singlespacing
+\emph{You are going to play a game where you must select a whole number between 1 and 10.
+You will receive a number of points equivalent to that number.
+After you tell us your number, we will randomly pair you with another player who is also playing this game. They will also have chosen a number between 1 and 10.
+If either of you selects a number exactly one less than the other player's number, the player with the lower number will receive an additional 10 points.}
+\end{quote}
+We adapted the costless and cycle variants similarly.
+The fourth ``1-7 game'' introduces an entirely new variant with a restricted choice set (see Appendix~\ref{app:instruct} for the full instructions for all games). 
+
+Of the 1,000 participants we recruited from Prolific, \NTotal{} passed the validation check and were randomly distributed across the four games.
+To ensure incentive compatibility, participants were paid \$1 for completion and had a 10\% chance of receiving the dollar value of the points they earned.
+We preregistered our complete experimental design, including all prompts for both the baseline and selected \aisub{s}---the latter using only the weights optimized on the basic 11-20 game.
+We have $\bm{\theta}^*$, $\bm{\theta}^*_{Hist}$, $\bm{\theta}^*_{MB}$, $\bm{\theta}^*_{N}$, and the baseline play each game.
+All \aisub{} responses are elicited using \textsc{Gpt-4o} with the temperature set to 1.
+All \aisub{} samples played these games \emph{before} the human subjects' data was collected.
+
+Figure~\ref{fig:all_110_a} presents the response distributions of initial play for all subject samples---both human (top two rows) and AI (remaining rows)---across the four novel games. 
+The responses from AR are all shifted down by 10 for ease of comparison---20 is now 10, 19 is 9, etc.
+Response distributions from the Prolific sample (thin black bars) are superimposed on all other samples.
+
+\begin{figure}[h!]
+\begin{center}
+\caption{Analysis of novel 1-10 games: response distributions and KL divergences}
+\vspace*{-0.1in}
+\label{fig:all_110}
+\begin{subfigure}{\textwidth}  
+\refstepcounter{subfigure}\label{fig:all_110_a}
+\centering
+\begin{overpic}[width=\textwidth]{plots/all_110.pdf}
+\put(-1,92){\large\bfseries (a)}
+\end{overpic}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\refstepcounter{subfigure}\label{fig:all_110_b}
+\centering
+\begin{overpic}[width=\textwidth]{plots/kl_110.pdf}
+\put(-1,23){\large\bfseries (b)}
+\end{overpic}
+\end{subfigure}
+\end{center}
+\vspace*{-0.2in}
+\begin{footnotesize}
+\begin{singlespace}
+\textit{Notes:} (a) plots human and AI response distributions for the four games. 
+Prolific data are in black superimposed on all other distributions. \citeauthor{1120Arad2012} data occupy the second row, shifted down by 10 to fit the 1-10 format.
+The remaining rows show the various \aisub{} samples named in the right-hand column. 
+(b) Reports the KL divergence between Prolific data and each other distribution.
+The minimum in each panel is flagged by a checkmark.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+The Prolific responses differ notably from AR's original results.
+Specifically, in the basic 1-10 game, the Prolific sample's distribution is more uniform, with a modal choice at 8 rather than AR's mode at 7; in the costless variant, Prolific responses peak at 10 instead of AR's 9 and 8; and the cycle variant yields a more uniform distribution relative to AR's original sample. 
+The newly introduced 1-7 game lacks an analogous comparison in AR, but the modal response is 5, and most other choices are on 4, 6, and 7.
+
+Assuming the difference is not due to sampling variation, the gap between the Prolific data and \citeauthor{1120Arad2012} is somewhat surprising. 
+Both sets of games share the same fundamental strategic structure. 
+Although the games differ in their Nash equilibria (which we know is not how actual humans play anyway), a fixed set of $k$-level reasoners would play them identically: level-0 would naturally choose the highest number (10), level-1 the second-highest (9), and so on. 
+The divergence may therefore reflect setting-specific factors or differences in beliefs about others' reasoning---precisely the kinds of factors that otherwise make theory difficult to apply.
+In the end, even highly relevant human data proves to be an imperfect predictor.
+
+Moving down Figure~\ref{fig:all_110_a}, the remaining rows show response distributions from various AI samples.
+Whether or not the AI sample successfully passed validation on the costless and cycle games is indicated below the sample name.
+The baseline AI (red) generally provides a poor fit to the Prolific data, frequently concentrating choices on 9. 
+The notable exception is the 1-7 game, where it disperses responses across several choices.
+
+Critically, the optimized sample of strategically-motivated \aisub{s} robustly generalizes to these novel settings.
+This is the only sample of \aisub{s} that was successfully validated on all of the data from AR's original games (the atheoretical samples each failed to improve in at least one of these games).
+Figure~\ref{fig:all_110_b} reports the KL divergence between the Prolific data and each AI-generated distribution: the strategic agents consistently outperform the baseline AI by at least \MinPercImproveArad\% in every variant (Appendix Figure~\ref{fig:dist_compare_1_10} shows the same comparisons for several alternative distance metrics). 
+Especially notable is the strategic agents' near-perfect alignment in the entirely novel 1-7 game (KL divergence = \KlHumanOptDistSeven). 
+Indeed, the strategically motivated AI even outperforms AR's original human data in predicting our Prolific participants' responses in the basic and cycle games.
+
+In stark contrast, atheoretical \aisub{s} fail to generalize.
+All arbitrary samples predict the human responses no better than the baseline in at least two of the four games.
+The  ``Always Pick `N''' agents are particularly nonsensical as they are solely instructed to select integers between 11 and 20, 
+highlighting a severe case of overfitting to a particular data-generating process.
+
+Overall, these results underscore our central claim: carefully identifying theoretically-grounded candidate \persona{s} and validating their predictive utility in related but distinct contexts can substantially enhance predictive accuracy in novel, unseen settings.
+Only agents subject to this approach generalized to the novel strategic games. 

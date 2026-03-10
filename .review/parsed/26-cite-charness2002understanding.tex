@@ -1,0 +1,43 @@
+\subsection{\cite{charness2002understanding}'s unilateral dictator games}
+\label{sec:cr_app}
+
+CR study a set of simple allocation decisions in which one player (the dictator) chooses between two ways of splitting money with a passive recipient. 
+In one version of these games, for example, the dictator (Person B) unilaterally decides between the options ``Left'' and ``Right'':
+\begin{quote}
+\centering
+$\underbrace{(\underbrace{400}_{\mbox{To A}}\:,\: \underbrace{600}_{\mbox{To B}})}_{\mbox{``Left''}}$ $\quad$ vs. $\quad$ $\underbrace{(\underbrace{700}_{\mbox{To A}}\:,\: \underbrace{300}_{\mbox{To B}})}_{\mbox{``Right''}}$.
+\end{quote}
+CR collected human responses for six variations of this basic dictator setting, each featuring different payoff distributions.
+These six settings constitute our training dataset from which we derive the joint empirical distribution $P$ of choosing Left.
+
+Figure~\ref{fig:cr_train} shows the original results from CR.
+The columns represent different settings and show the payoffs for each player depending on the dictator's choice of ``Left'' or ``Right''.
+The y-axis shows the proportion of the sample that chose ``Left'' for each setting, and the black bars correspond to the distribution of human responses from CR.
+Besides the Pareto-dominated Berk23 setting, where everyone chooses ``Right,'' the human data is balanced across the two options.
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Distribution of responses for the single-stage training dictator games} 
+\label{fig:cr_train}
+\vspace*{-0.15in}
+\centering
+\includegraphics[width=.9\textwidth]{plots/cr_unilater_dict.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:}
+This figure reports the results of replications of the unilateral dictator games from \cite{charness2002understanding}. 
+Columns each represent a different game, and the x-axis corresponds to different samples of subjects playing each game.
+The y-axis shows the proportion of that sample choosing the option ``Left.'' The black bars (and the dashed black lines) are the human responses from the original paper, red is the baseline \aisub{s}, blue are the agents optimized using efficiency, self-interest, inequity aversion as parameters, and the yellow are atheoretical agents with preferences for the TV show new girl, taxidermy, and swimming. 
+Error bars report 95\% Wilson confidence intervals.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+To establish the baseline ($\hat P_0$), we elicited 1,000 responses per setting from \textsc{Gpt-4o}, without any additional instructions.\footnote{\cite{horton2023large} also explore the baseline for the same games. Although their goal is to provide an early demonstration of AI simulation more generally.}
+The red bars in Figure~\ref{fig:cr_train} represent these baseline AI responses. Notably, the baseline AI strongly favors choosing ``Right'' in nearly every setting, diverging sharply from the balanced human distributions. 
+Quantitatively, this mismatch is substantial: using mean absolute error (MAE) as our distance metric, we find $\frac{1}{6}\sum_{s \in S} d(P_s,\hat P_0)=\CRBaselineTrainMAE$. 
+Given that the maximum possible MAE is 1, this is poor baseline predictive accuracy.

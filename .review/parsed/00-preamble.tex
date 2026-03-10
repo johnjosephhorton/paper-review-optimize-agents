@@ -1,0 +1,67 @@
+% === Macro definitions from preamble ===
+\newcommand{\starlanguage}{Significance Indicator: $^{***}
+\newcommand{\aisub}{AI agent}
+\newcommand{\persona}{prompt}
+\newcommand{\Persona}{Prompt}
+\newcommand{\NGamesS}{1,500}
+\newcommand{\NParticipantS}{4,500}
+\newcommand{\TotalGames}{883,320}
+\newcommand{\green}[1]{\textcolor{ForestGreen}
+\newcommand{\red}[1]{\textcolor{Red}
+\newcommand{\WorkingTitle}{General Social Agents}
+% === End macro definitions ===
+
+  
+\date{\today}
+\title{\WorkingTitle{}\thanks{
+Thanks to Tyler Cowen and the Mercatus Center for generous funding and intellectual support.
+Thanks to 
+Alex Moehring,
+Daniel Rock,
+David Holtz,
+Drew Fudenberg,
+Jenny Allen,
+Jessica Hullman,  
+John List,
+Kehang Zhu,
+Leland Bybee,
+Michael Zhao,
+Seth Benzell,
+Sophia Kazinnik,
+Soumitra Shukla, and
+Steve Tadelis
+for their time and helpful comments.
+We are deeply grateful to Reanna Ishmael for software development support.
+The experiments in this paper were preregistered on \url{https://aspredicted.org/} numbers $222695$, $231091$, and $241394$.
+Author contact information, code, and data are currently or will be available at \url{http://www.benjaminmanning.io/}. 
+Both authors have a financial interest in \url{https://www.expectedparrot.com/}. Horton is an economic advisor to Anthropic.
+In preparing this paper, the authors utilized generative AI models extensively as tools to assist with editing and evaluation. 
+The authors retain full responsibility for all content and conclusions presented herein.
+}
+} 
+\author{
+Benjamin S. Manning \\ MIT  \and   
+John J. Horton \\ MIT  \& NBER
+}
+% \date{\today\\\vspace{2em}MOST RECENT DRAFT \href{https://benjaminmanning.io/files/optimize.pdf}{[HERE]}}
+\date{\today}
+
+\pagenumbering{gobble} 
+\maketitle
+
+\vspace{-0.5cm}
+\begin{abstract}
+
+\noindent Useful social science theories predict behavior across settings. 
+However, applying a theory to make predictions in new settings is challenging: rarely can it be done without ad hoc modifications to account for setting-specific factors.
+We argue that AI agents put in simulations of those novel settings offer an alternative for applying theory, requiring minimal or no modifications.
+We present an approach for building such ``general'' agents that use theory-grounded natural language instructions, existing empirical data, and knowledge acquired by the underlying AI during training.
+To demonstrate the approach in settings where no data from that data-generating process exists---as is often the case in applied prediction problems---we design a heterogeneous population of \TotalGames{} novel games.
+AI agents are constructed using human data from a small set of conceptually related but structurally distinct ``seed'' games.
+In preregistered experiments, on average, agents predict initial human play in a random sample of \NGamesS{} games from the population better than (i) a cognitive hierarchy model, (ii) game-theoretic equilibria, and (iii) out-of-the-box agents.
+For a small set of separate novel games, these simulations predict responses from a new sample of human subjects \emph{better} even than the most plausibly relevant published human data.
+\end{abstract}
+
+\onehalfspacing
+\newpage \clearpage
+\pagenumbering{arabic}

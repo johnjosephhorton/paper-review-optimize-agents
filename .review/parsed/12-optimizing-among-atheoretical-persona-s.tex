@@ -1,0 +1,76 @@
+\subsection{Optimizing among atheoretical \persona{s}}
+\label{sec:arbitrary_select}
+
+We now generate sets of arbitrary, atheoretical \aisub{s} using the basic version of the game, which ultimately fail validation on the cycle and costless versions.
+These agents will offer a substantial contrast with $\bm{\theta}^*$ when applied to entirely novel games in the next subsection.
+This exercise also highlights two potential pitfalls of AI simulations addressed by our approach: (i) without theoretically motivated candidate \persona{s}, optimization may fail to even improve predictive power in-sample over the baseline, (ii) atheoretical candidate sets can be optimized to effectively match particular samples of human data---even when such samples are obviously overfitting.
+The former is addressed by using samples of \aisub{s} grounded in plausible theory, and the latter is addressed by using training and testing data from distinct settings (or training and testing both across many different settings).
+
+To illustrate these points concretely, we introduce three new sets of candidate \persona{s}, none having any plausible relationship to strategic reasoning or the choices made in the different 11-20 games.
+These are shown in Table~\ref{tab:bad_personas} in the appendix.
+The first set consists of historical figures ($\Theta_{Hist}$);\footnote{Cleopatra, Julius Caesar, Confucius, Joan of Arc, Nelson Mandela, Mahatma Gandhi, Harriet Tubman, Leonardo da Vinci, Albert Einstein, Marie Curie, Genghis Khan, Mother Teresa, Martin Luther King, Frida Kahlo, George Washington, Winston Churchill, Mansa Musa, Sacagawea, Emmeline Pankhurst, and Socrates.} the second has the 16 Myers-Briggs personality types ($\Theta_{MB}$); and the third set comprises 10 ``Always Pick `N''' agents ($\Theta_{N}$), each of which is instructed to exclusively select a given integer from 11 to 20.\footnote{These agents all take the form of \emph{``You always pick N''} for $N \in \{11,\ldots, 20\}$.}
+We apply the exact same selection procedure used in Section~\ref{sec:apply_mixture} to find optimized weights for each set, using only the human data from the basic version of the 11-20 game.
+
+Table~\ref{tab:bad_personas} also shows the resulting weights.
+For the historical figures, nearly all weight (89.1\%) collapses onto Julius Caesar and a small remainder on Confucius (10.1\%).
+In the Myers-Briggs set, all weight concentrates on ENFP.\footnote{ENFP is Extraversion, Intuition, Feeling, Perceiving (\url{wikipedia.org/wiki/Myers-Briggs_Type_Indicator}).} 
+While Julius Caesar is historically renowned for his strategic military prowess, it is unclear how a generic reference to his name translates into a meaningful \persona{} for this game. 
+Likewise, Myers-Briggs constructs are widely considered to be pseudo-scientific and meaningless.
+
+Figure~\ref{fig:compare_bad_1120} shows that these two selected samples do not even offer a good in-sample fit.
+Each row corresponds to a different variant of the game---the top row is the basic.
+The columns represent different \aisub{} types, with the empirical PMFs from AR superimposed in black.
+The KL divergence between the distributions in each panel is shown in the top left of each panel.
+After optimization, the in-sample KL divergence between the selected \aisub{s} and the humans in AR is $d(P, \hat P_{\bm\theta^*_{Hist}}) =\KlHumanHistDist$ and $d(P, \hat P_{\bm\theta^*_{MB}}) =\KlHumanMBDist$ for the historical figures and Myers-Briggs, respectively.
+These are not much better than the baseline $d(P, \hat P_0) =\KlHumanRawDist$ and far worse than the strategic \aisub{s} $d(P, \hat P_{\bm\theta^*}) = \KlHumanOptDist$.
+
+\begin{figure}[h!]
+\begin{center}
+\caption{Response distributions for the 11-20 games with atheoretical \aisub{s}}
+\vspace*{-0.12in}
+\label{fig:bad_1120}
+\begin{subfigure}{\textwidth}  
+\refstepcounter{subfigure}\label{fig:compare_bad_1120}
+\centering
+\begin{overpic}[width=.9\textwidth]{plots/bad_1120_all.pdf}
+\put(-1,55){\large\bfseries (a)}
+\end{overpic}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\refstepcounter{subfigure}\label{fig:distances-11-20}
+\centering
+\begin{overpic}[width=.9\textwidth]{plots/kl_1120.pdf}
+\put(-1,25){\large\bfseries (b)}
+\end{overpic}
+\end{subfigure}
+\end{center}
+\vspace*{-0.2in}
+\begin{footnotesize}
+\begin{singlespace}
+\textit{Notes:} (a)  shows empirical PMFs for three variants of the 11-20 game from \citeauthor{1120Arad2012}, compared to selected atheoretical \aisub{} samples optimized using only the basic version. Rows correspond to game variants, and columns correspond to \aisub{} types, with human data superimposed in black. Historical figures and Myers-Briggs subjects poorly match human distributions across all variants. 
+The ``Always Pick `N''' set matches human data perfectly in-sample but fails to generalize.
+(b) shows KL divergence between human and AI responses for games from \citeauthor{1120Arad2012}. 
+The lowest KL divergence in each panel is indicated by a checkmark. 
+Only the strategically-selected \aisub{s} consistently improve over the baseline in all games.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+The core issue is that these ``theories'' are bad: historical personas and pseudo-scientific personality types are not causally related to how humans play these games, which means the \persona{s} cannot generate meaningful variation in the dependent variable.
+The hypothesis classes are not flexible enough, and the optimization produces a predictive model that severely underfits.
+To make an analogy, if $x$ covaries with $y$, then $y = mx + b$ may effectively fit a range of $(x,y)$ pairs, but $y = b$ cannot.
+
+When validated out-of-sample on the costless and cycle variants (Figure~\ref{fig:compare_bad_1120}, bottom rows), these atheoretical personas perform even worse relative to the baseline. 
+Both historical figures and Myers-Briggs types simply default to selecting 19 shekels, severely diverging from the shifted human response distributions.
+
+The third atheoretical set (`Always Pick `N''') initially appears successful, achieving a perfect in-sample fit ($d(P, \hat P_{\bm\theta^*_{N}}) = \KlHumanSameNumDist$).
+However, this is misleading---such personas offer no flexibility. 
+Each agent always selects its assigned integer, between 11 and 20, regardless of setting changes, clearly overfitting to the training data.
+Unsurprisingly, when validated on the human data from the new variants, these largely fail to improve over the baseline, merely reproducing their training distribution and failing to capture shifts in human responses (rightmost column of Figure~\ref{fig:compare_bad_1120}). 
+
+Figure~\ref{fig:distances-11-20} succinctly compares these results along with the optimized mixture of strategic \aisub{s} and the baseline, marking the best-performing sample in each setting. 
+Only $\bm{\theta}^*$ consistently outperforms the baseline and generalizes across all settings.
+All three atheoretical samples are strictly worse than the baseline on both validation games.
+
+These results underscore the importance of theory-driven candidate \persona{s} and validation across related but distinct settings.
+We next show that failure to pass validation bodes poorly for predicting responses in new settings.

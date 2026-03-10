@@ -1,0 +1,36 @@
+\subsection{Optimizing among atheoretical \persona{s}}
+\label{sec:atheory_prompt}
+
+Similarly to our study of AR, grounding a \persona{} template in theory is important for generalization.
+We do this via negative example.
+Specifically, without a theoretical grounding, the optimization procedure may fail to find a \persona{} that even fits in-sample.
+
+Unlike in the Section~\ref{sec:predict_new_AR} with the Always Pick `N' agents, we do not offer an analogous overfitting example.
+Because human data from multiple games is used for optimization, finding a sample of \aisub{s} which overfits requires finding \persona{s} which overfit to all six settings.
+This is a much more difficult task than finding a \persona{} which overfits to a single game.
+Indeed, this is an attractive feature of using multiple training samples to construct and validate agent samples.
+
+To generate samples of arbitrary agents, we repeat the entire process from Section~\ref{sec:apply_prompt} but replace the theory-grounded attributes (i.e., efficiency, inequity aversion, and self-interest) with wholly unscientific ones: a self-reported fondness for the TV show \emph{New Girl}, an enthusiasm for taxidermy, and swimming ability.  
+This new prompt template is:
+\begin{quote}
+\vspace{-.5cm}
+\singlespacing
+$\theta(\phi_{ng}, \phi_{tax}, \phi_{swim})$ = \textit{On a scale from 1 to 10, you think the show New Girl is: \{$\phi_{ng}$\}.
+10 means you love New Girl, and 1 means you hate it.
+On a scale from 1 to 10, your passion for taxidermy is: \{\(\phi_{tax}\)\}.
+10 means you love taxidermy, and 1 means you hate it.
+On a scale from 1 to 10, your ability to swim is: \{\(\phi_{swim}\)\}.
+10 means you are a great swimmer, and 1 means you can't swim.}
+\end{quote}
+
+Using identical hyperparameters and the same Bayesian optimization procedure, we search over this atheoretical space to see if any combination of $(\phi_{ng}, \phi_{tax}, \phi_{swim})$ (each a sample of 3 agents with their own parameter vector) could even match the original single-stage dictator games in-sample.  
+The resulting atheoretical parameter vector was: $\bigl(\bm{\phi}_{ath-1}^*,\bm{\phi}_{ath-2}^*,\bm{\phi}_{ath-3}^*\bigr) \;=\; \bigl(\,(5,\,7,\,1),\;(9,\,9,\,5),\;(7,\,6,\,8)\bigr)$.
+As shown in Figure~\ref{fig:cr_train} (yellow), $\bm{\theta}_{ath}^*$ constructed using these parameters and template failed to beat even the baseline \aisub{s}' performance.  
+In fact, throughout the search, no parameter combination for ``loving \emph{New Girl},'' ``passion for taxidermy,'' or ``swimming skill'' ever produced a distribution of choices that aligned more closely with real humans.
+This result demonstrates the importance of grounding \aisub{s} in theoretical constructs.
+
+This lack of improvement persisted in the two-stage validation games as well (Figure~\ref{fig:cr_test}; rightmost column).  
+The atheoretical \aisub{s} and the baseline were effectively indistinguishable in their distribution of responses as Player A, and the atheoretical subjects were only a little better as Player B.
+Overall, the atheoretical \aisub{s} were far less aligned than the theory-grounded \aisub{s}. 
+They were closer to the human data than the baseline in $\CRTestAtheoryTotalProp$\% of the settings, worse than the baseline in $\CRTestBaselineTotalPropAtheo$\% of the settings, and identical in the remaining games.
+The only way these arbitrary \persona{s} generalize is that their poor performance is consistent across settings.

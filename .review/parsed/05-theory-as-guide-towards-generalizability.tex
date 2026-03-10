@@ -1,0 +1,62 @@
+\subsection{Theory as guide towards generalizability}
+
+A core function of economics is to construct models that capture causal and generalizable relationships that remain stable across environments.
+For example, the idea that humans make reference-dependent utility choices is not specific to one particular economic environment, but has been shown to broadly apply to decision-making under uncertainty \citep{prospectkahneman1979}.
+Conveniently, these are exactly the types of generalizable relationships that we would expect to better predict human behavior in new settings when supplied to an LLM.
+Our approach is to narrow the search space of possible \persona{s} by grounding candidate \persona{s} in such theories.
+By doing so, we might increase the likelihood of identifying \persona{s} that we have prior reason to believe reflect genuine, stable behavioral patterns.
+Without doing so, we risk dramatically underfitting and failing even to accurately predict the training data.
+
+Economic theories---and theories from other social sciences that embrace methodological individualism \citep{friedman1953methodology}---are well-suited to be cast into \persona{s}, since good theory rests on the choices and actions of individuals.
+Specifically, we consider a prompt to be ``theoretically grounded'' when it instructs the LLM to make predictions about how a human would respond based on some underlying theory or model of human behavior.
+For example, a utility function that trades off one's own payoff against inequality might become \emph{``You value your own earnings but dislike outcomes where you earn far more (or less) than others.''}
+A highly capable and tool-using LLM could even be given that utility function and parameters directly (e.g., $u(x_{self}, x_{other})= x_{self} - | x_{self} - x_{other}|$).
+A prospect-theoretic model reasonably maps to \emph{``You are risk averse in gains, risk seeking in losses, and probability weight the very likely and very unlikely outcomes''}---and of course these could be parameterized as well.
+
+This definition is necessarily broad because what constitutes a theory is also broad.
+One might consider good theories to be those that are parsimonious, predictive, and interpretable.
+We view these as effective guides for constructing \persona{s} that are grounded in theory.
+But just as there is no universal rule as to what makes a theory good, there is not a singular all-encompassing playbook for candidate \persona{s}.
+Here, the researcher must leverage their expertise appropriately to determine which theories are most relevant to the domain where predictions are desired.
+This should be relatively straightforward in practice.
+One can even simply ask an LLM to construct a candidate set of prompts based on a given paper and then adjust the prompts accordingly.
+For example, the linked notebook---which took 15 minutes to code---contains an example where we take PDFs of 5 well-known papers in the behavioral economics literature and generate 10 agents from each.\footnote{\url{https://expectedparrot.com/content/32751dae-7a69-430d-9f1a-0c3f50ccef5b}}
+
+It is worth highlighting just how flexible such agents are as predictive models.
+They can make predictions in response to \emph{any} setting described in natural language.
+This is usually impossible for traditional machine learning and mathematical economic models, which operate within a fixed parameter space. 
+One cannot introduce additional covariates to a regression model once it is trained. 
+Similarly, a prospect-theoretic model for evaluating risky gambles cannot instantaneously incorporate other contextually relevant factors---the recent performance of financial markets, the demographic composition of the experimental sample, or even something as mundane as whether participants are making decisions before or after lunch. 
+\aisub{s}, by contrast, can interpolate over such details through natural language instructions. 
+Whether these agents actually leverage this flexibility effectively is, of course, an empirical question, but one that is easily testable.
+
+Once a set of \persona{s} is defined, we can optimize them against an appropriate sample of relevant human decisions.
+This may involve searching for an optimal mixture of \persona{s}, or adding continuous parameters directly in a single prompt and adjusting them until the simulated distribution aligns with the training data.
+From a machine learning perspective, the candidate set of \persona{s} defines the functional form of our hypothesis class, with theory guiding this specification to effectively navigate the bias-variance tradeoff.\footnote{One could imagine an ``oracle'' \persona{} akin to a perfect program, describing every preference, heuristic, and belief update rule---allowing the LLM to accurately produce responses in all contexts for a person.
+In effect, our approach is to identify portions of this oracle that are most relevant to the given training and testing data.
+Increasing context windows suggest that such highly generalizable agents may be possible in the not-so-distant future.}
+The set is then pruned (or tuned, depending on the method) to best fit the training data.
+
+As an example, consider the extensive theoretical and empirical economic literature studying how people reason strategically \citep{STAHL1994,STAHL1995,1120Arad2012, Camerer2004Cognitive}.
+Level-$k$ models, for instance, predict that individuals best respond based on their beliefs about others' levels of reasoning. 
+In the $\frac{2}{3}$ guessing game, players aim to pick $\frac{2}{3}$ of the average number chosen by the group \citep{LkNagel1995,keynes1936general}. 
+If we had human data from such a game, we could construct a series of \persona{s} that specify different levels of strategic thinking (e.g., \emph{``You are a level-0 reasoner,'' ``You are a level-1 reasoner,''} etc.).
+We then identify the mixture that best fits the training distribution and test whether it generalizes to other variants of the game (e.g., different values than $\frac{2}{3}$).
+Then, the optimized \persona{s} can be used to predict other related distributions in new settings.
+
+Of course, constructing and validating these \persona{s} is not a perfectly specified problem.
+There are various ways to translate a theory into natural language, and multiple theories may apply to a given setting.
+The boundaries of a theory and the settings it plausibly governs are not always well-defined.
+Nor can we guarantee that the data-generating processes of the training and testing sets are either sufficiently similar or sufficiently distinct to yield reliable validation.
+Yet, as we will show empirically, these challenges can be overcome in practice, at least in some domains.
+
+Ultimately, applying a \persona{}---or a set of \persona{s}---to a new environment requires an unavoidable inductive leap.
+What we can do is try to make the leap explicit and interpretable.  
+LLMs are extremely good at following explicit, well-defined instructions.
+Because each \persona{} is a set of these flexible natural language instructions, researchers can both evaluate performance and reasonably assess its relevance for a new setting.\footnote{Such flexibility also makes \aisub{s} less susceptible to the Lucas critique \citep{Lucas1976Critique}---if at all.
+Unlike traditional agent-based models or mathematical theories, which have hard-coded predetermined processes to generate predictions, LLMs can, as we will show, interpret new policies in context, reason through their implications, and adaptively formulate responses.
+}
+This mirrors how economic theory is used more broadly with real humans: it is tested against data, observed where it succeeds or fails, and cautiously extrapolated to settings just beyond current evidence.
+When a new tariff is proposed, for example, the theory motivating the tariff is not known to be universally ``correct'' in a complex dynamic world ex ante.
+It is a disciplined guess, shaped by assumptions and previous evidence, which the economist then uses to make predictions about the world.
+Theory-guided \persona{s}, validated across environments, bring the same kind of disciplined reasoning to simulated \aisub{} predictions of human behavior.

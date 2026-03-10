@@ -1,0 +1,74 @@
+\subsection{Optimizing \aisub{s} in-sample}
+\label{sec:apply_mixture}
+
+We begin by eliciting the baseline AI's response distribution ($\hat P_0$).
+We prompt \textsc{Gpt-4o} to play the basic version of the game 1,000 times without any additional instructions, setting the temperature to 1. 
+Figure~\ref{fig:compare_agents_train} displays the results. 
+The left panel shows the empirical PMF of the baseline AI responses (red), along with the empirical human distribution $P$ from AR's original experiment (vertical black lines). 
+The baseline AI almost exclusively selects 19 shekels (\BaselineOneNineMass\%), demonstrating limited variability. 
+Using the forward KL divergence as $d(\cdot,\cdot)$ with the human distribution as the reference, the distance between these distributions is $d(P,\hat P_0) =\KlHumanRawDist$.
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\linewidth}
+\caption{Response distributions for the basic version of the 11-20 game} 
+  \vspace*{-0.15in}
+\label{fig:compare_agents_train}
+\centering
+\includegraphics[width=.8\textwidth]{plots/basic_1120.pdf}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} This figure displays empirical PMFs for three samples playing the basic 11-20 money request game: human subjects from \citeauthor{1120Arad2012} (the vertical black lines in both panels), the off-the-shelf baseline (left panel), and responses from our selected \aisub{s} based on the weights (right panel).
+The KL divergence between the human and AI distributions is reported in the upper left corner of each panel.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+Such a poor baseline result is unsurprising.
+In a related exercise, \cite{gao2024caution} also elicit responses from various LLMs playing the same 11-20 game.
+Even after applying diverse prompting strategies, fine-tuning, and endowing agents with distributions of demographic traits, they similarly find that LLMs strongly index on choosing 19 shekels.
+While this outcome is not inherently problematic---19 shekels lies within the support of both the Nash equilibrium and the empirical human distribution---it underscores a limitation: demographic prompts (and the other techniques they employ) alone provide little leverage in predicting strategic human reasoning.
+They do not provide any reliable, flexible program for the LLM to follow, nor do they allow for heterogeneity within the simulated sample.
+In contrast, the level-$k$ model implies that optimal predictions require explicitly accounting for how individuals reason about others' decisions.
+And because we know from AR that there is likely a distribution of reasoning levels in their human sample, we should apply various levels of reasoning to construct a heterogeneous sample of agents.
+This may, in turn, better reflect the distribution of human strategic reasoning processes.
+
+To operationalize the level-$k$ reasoning explicitly, we construct a set of natural language \persona{s} ($\Theta_{Strategic}$) corresponding to varying levels of strategic reasoning.
+These candidate \persona{s}, listed in Table~\ref{tab:persona}, specify how far ahead each \aisub{} reasons about the opponent's decisions, effectively encoding beliefs about others' strategies.
+
+We elicit response distributions $\hat P_{\theta}$ for each candidate \persona{} $\theta \in \Theta_{Strategic}$ by prompting \textsc{Gpt-4o} 100 times per \persona{}.\footnote{We then elicit each \aisub{'s} responses using Chain-of-Thought prompting, which encourages step-by-step reasoning before producing a final answer \citep{weiCOT2024}. We implement this through two sequential prompts. \textbf{Prompt 1}: \emph{\{\texttt{11-20 game instructions}\}. Reason out a few settings according to your personality and how others might respond.} \textbf{Prompt 2}: \emph{\texttt{\{11-20 game instructions}\}. You previously had the following thoughts: \{\texttt{Response to prompt 1}\}. What amount of money would you request?}. This procedure creates the agents (and their response distributions) over which we then optimize.}
+We then employ the selection method to identify the optimal mixture of \persona{s} that minimizes the absolute difference between the CDFs implied by the empirical distribution of the human responses ($P$).
+This distance can be minimized using simple nonlinear programming techniques.
+The weights $\mathbf{w}^*$ corresponding to the optimal mixture appear in the second column of Table~\ref{tab:persona}.\footnote{See \url{https://www.expectedparrot.com/content/6f58d11f-98cc-4de5-bb89-edcf78042d79} for the agents.}
+
+Most mass concentrates on two \persona{s}: one that reasons between levels 1 and 3 (47\%), and another varying more broadly from levels 0 to 5 (34\%). 
+The remaining weight falls on more extreme behaviors (random choices or the safest guaranteed option). 
+This aligns closely with AR's findings, whose human subjects predominantly exhibited level-0 through level-3 reasoning or made random choices.
+
+\begin{table}[h!]
+\begin{center}
+\caption{Proposed \aisub{} \persona{s} and resulting mixture weights from the selection method} 
+\label{tab:persona}
+\footnotesize
+\setlength{\tabcolsep}{7pt}
+\input{tables/personas.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:}
+This table shows the set of \persona{s} $\Theta_{Strategic}$ used as input to the selection method.
+The right column shows the optimized mixture weights $\mathbf{w}^*$ that minimize the absolute difference between the CDFs of the human distribution $P_s$ and the distribution of responses from the \aisub{s}.
+Prepended to all the \persona{s} is: \emph{You are a human being with all the cognitive biases and heuristics that come with it}. 
+We also include an explanation in the prompts for $k$-level reasoning for all \persona{s} besides the random one: \emph{A k-level thinker thinks k steps ahead. A 0-level thinker thinks 0 steps and would, therefore, just select the maximum amount that guarantees money.}
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+  
+Using these weights, we generate the sample $\bm{\theta}^*$ of 1,000 \aisub{s} by assigning each agent to one of the 10 \persona{s} with probability equal to its corresponding weight in Table~\ref{tab:persona}. 
+The resulting empirical distribution of responses $\hat P_{\bm\theta^*}$ produced by this sample of 1,000 agents $\bm{\theta}^*$ appears in the right panel of Figure~\ref{fig:compare_agents_train} (blue).
+The improvement over the baseline AI is substantial: $d(P, \hat P_{\bm\theta^*}) = \KlHumanOptDist$ is \KlPercDiffBasic\% smaller than $d(P, \hat P_0) = \KlHumanRawDist$, demonstrating a strong in-sample fit.
+  

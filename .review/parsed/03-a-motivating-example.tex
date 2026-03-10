@@ -1,0 +1,35 @@
+\subsection{A motivating example}
+
+Suppose we want to predict how people will share resources in a novel public goods game (as they do in \cite{alsobay2025integrative}).
+In this new game, for which we have no previous data, three participants will be endowed with \$5 and can choose to contribute any portion of their endowment, which will be multiplied by 3 and then divided equally among all participants.
+While we do not have any prior public goods game data, we do have human data from a related \$20 dictator game.
+It is related in the sense that one might reasonably expect some generalizable features of human choice to affect allocations in both games.
+The observed human offers from the dictator game are \{6,6,7,7,8,8,9,9\}.
+
+Before LLMs, one might have tried to train a standard machine learning model (e.g., decision trees or regression) solely on these dictator game offers.
+However, such models would struggle to transfer to the structurally distinct public goods game, as they cannot adapt across different game formats without retraining.
+LLMs offer a more flexible alternative. 
+Rather than training a new model from scratch, we can prompt 
+an existing LLM to simulate responses by instructing it to behave as a human participant.
+For instance, we might use a baseline system prompt: \emph{``You are a human.''}
+We can then append game-specific prompts such as \emph{``You are playing a dictator game with \$20...''} or \emph{``You are playing a public goods game with \$5...''} without any additional training.
+
+Suppose that, when prompted with the dictator game instructions, the LLM produces a response distribution \{3,3,3,3,3,4,4,4\}.
+Although well within the allowable offers, this distribution clearly diverges from the observed human data  (\{6,6,7,7,8,8,9,9\}) and leaves us with little hope that it could effectively predict responses to the novel public goods game.
+Thus, even though the model may capture some general aspects of human behavior as a baseline, i.e., a tendency to offer nontrivial amounts \citep{Henrich2001InSearch}, it does so imperfectly.
+
+One might think this problem could be addressed by first randomly splitting the human sample of dictator game offers into training and testing sets.
+And then identifying the best-performing \persona{s} on the training set, and validating their performance on the test set \citep{ML2017Sendhil,ludwig2025llmapplied}.
+Indeed, an LLM instructed \emph{``You randomly choose numbers between 6 and 9''} could reasonably predict both training and testing sets for any split of the human data better than the baseline LLM with no persona.
+However, such an approach will almost certainly fail to generalize beyond the specific data-generating process that produced the dictator game offers.
+It has, in effect, still overfit.
+Rather than overfitting to the training data, it has overfit to the whole data-generating process.
+
+Now, consider a more theoretically grounded \persona{}: \emph{``You are self-interested but fair.''}
+Suppose an LLM endowed with this \persona{} also generates offers in the 6-9 range for the \$20 dictator game.
+Crucially, this \persona{} aligns with known causal factors that drive human sharing behavior more broadly, like behavioral parameters in empirically tested theoretical models (e.g., \cite{charness2002understanding}).
+It is a flexible decision-making program that can be effectively applied to various types of allocation games.
+Yet, without explicit knowledge of the causal drivers governing behavior in the new public goods game, nothing in the data produced by either \persona{} alone rules out the atheoretical random-number prompt.
+This illustrates the core challenge.
+We seek to construct and select \persona{s} that do not overfit to a single data-generating process, but instead capture the stable behavioral drivers relevant across settings.
+Then, we might gain confidence that they will better predict human responses in novel target settings governed by the same drivers.

@@ -1,0 +1,44 @@
+\subsubsection{Cognitive hierarchy model as a benchmark}
+
+The cognitive hierarchy model of \cite{Camerer2004Cognitive} is a well-established behavioral model for predicting human behavior in strategic games. 
+It has a similar structure to the level-$k$ model from \citeauthor{1120Arad2012}, assuming a distribution of players with different reasoning levels from zero through $k$. 
+However, there are three key differences. 
+First, rather than assuming level-$0$ players choose the highest or most obvious choice, it assumes they choose uniformly at random. 
+Second, level-$k$ players best respond to the mixture of all lower-level players (levels $0$ through $k-1$), not just level-$(k-1)$. 
+Specifically, each level chooses a pure strategy best response, and if multiple pure strategies are equally optimal, players at that level mix uniformly between them. 
+For example, in the original 11-20 money request game, the cognitive hierarchy model assumes level-$0$ players choose uniformly at random, level-$1$ players best respond to this uniform distribution, while level-$2$ players best respond to the weighted mixture of level-$0$ and level-$1$ players, and so on.
+Third, the number of level-$k$ players is assumed to follow a Poisson distribution ($f(k) = \frac{\tau^k e^{-\tau}}{k!}$).
+
+The key limitation of this model in our setup---shared by the aforementioned supervised machine learning approaches---is that it requires a pre-specified value for $\tau$ to parameterize the distribution of different-level players.
+Since our goal is to make predictions in the 1,500 games where we have no prior human data, we have no compelling value to choose for $\tau$ other than that from the literature.
+In their meta-analytic validation across many strategic games and subject pools, \cite{Camerer2004Cognitive} find that $\tau = 1.5$ is often an accurate predictor of human response distributions.
+As such, we adopt $\tau = 1.5$ as our ex ante parameter value.
+This estimate implies the modal player is level-$1$, with 90\% of mass between levels $0$ and $3$.
+
+With this as the distribution over reasoning levels, we mechanically calculate the cognitive hierarchy model's predictive distribution for each game in $S$.
+Since this is mechanical for a given game, it does not affect statistical inference for $\bar\Lambda_{S}$.
+Figure~\ref{fig:ch_plot} illustrates the diversity of predictive distributions across games.
+Each panel corresponds to a predictive PMF for one of the 1,500 games, which are ordered top-left to bottom-right by their variance.
+The x-axes are scaled freely, so games with different action spaces (e.g., 5, 11, or 20 options) span the same horizontal width. 
+The y-axes are also scaled freely, ensuring that distributions with small probabilities remain visible.
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Predictive distributions from the cognitive hierarchy model for all 1,500 games in $S$} 
+\label{fig:ch_plot}
+\vspace*{-0.1in}
+\includegraphics[width=\textwidth]{plots/ch_plot.png} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This figure shows the predictive distributions of \cite{Camerer2004Cognitive} Poisson cognitive hierarchy model ($\tau = 1.5$) across all 1,500 sampled games in $S$, with each panel corresponding to one game.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+From the modest natural-language permutations in Table~\ref{tab:game_parameters}, we obtain a striking range of predictive distributions from the cognitive hierarchy model.
+Some spread probability across many options, while others concentrate only on the extremes—the highest and lowest actions.
+A few resemble uniform distributions, others exhibit sharp spikes on a small set of actions, and still others increase monotonically with the action number.

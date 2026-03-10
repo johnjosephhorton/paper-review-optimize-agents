@@ -1,0 +1,84 @@
+\subsection{A pre-committed family of strategic games}
+
+The pre-committed family of games generalizes the original 11-20 money request game by parameterizing it into six independent variable components.\footnote{\cite{alsobay2025integrative} similarly generate various public goods games and \cite{zhu2025capturing} do so for over 2,000 2-by-2 strategic games.}
+Each symmetric game preserves the core idea behind the original: two players simultaneously select a whole number between two bounds, earning guaranteed points based on their individual choice plus a potential bonus determined by both players' choices.
+The six parameters---lower bound, upper bound, gap to achieve the bonus, bonus size, rule to award guaranteed points, and bonus rule---are detailed in Table~\ref{tab:game_parameters}.
+The table's upper portion enumerates the possible values for the first five parameters, while the bottom section presents the eleven possible bonus rules. 
+
+\begin{table}[h!]
+\begin{center}
+\caption{Game parameters and possible values} 
+\label{tab:game_parameters}
+\scriptsize
+\setlength{\tabcolsep}{7pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}p{1.8cm}p{9cm}p{4cm}}
+\toprule
+\textbf{Parameter} & \textbf{Possible Values} & \textbf{Description} \\
+\midrule
+\emph{Lower Bound} & The minimum number players can select & $\{1, 2, \ldots, 20\}$ \\
+\emph{Upper Bound} & lower bound + $\{5, 6, \ldots, 20\}$ & Max number players can select \\
+\emph{Bonus Size} & Points awarded when bonus condition is met & $\{1, 2, \ldots, 20\}$ \\
+\emph{Gap} & Difference parameter used in certain bonus rules & $\{1, 2, 3, 4\}$ \\
+\emph{Points Rule} & Rules to award guaranteed points (\# is number participants select) & \{\# - 2, \# - 1, \#, \# + 1, \# + 2, costless - 2\} \\
+\midrule
+\multicolumn{1}{@{}l}{\textbf{Bonus Rule}} & \multicolumn{1}{l}{\textbf{Bonus awarded to player when...}} & \multicolumn{1}{l}{\textbf{Mutual vs. Competitive}} \\
+\midrule
+\emph{Gap Low} & they select exactly \{\textit{gap}\} less than the opponent & Competitive \\
+\emph{Gap High} & they select exactly \{\textit{gap}\}  more than the opponent & Competitive \\
+\emph{More Than} & they select a number \{\textit{gap}\} more than the opponent's number & Competitive \\
+\emph{Gap Abs.} & the absolute difference from the opponent's number equals \{\textit{gap}\} & Mutual\\
+\emph{Equal} & they select the same number as the opponent & Mutual\\
+\emph{Unequal} & they select a different number than the opponent & Mutual\\
+\emph{Sum Even} & the sum of both numbers is even & Mutual\\
+\emph{Sum Odd} & the sum of both numbers is odd & Mutual\\
+\emph{Coord. Low} & both players select the lower bound & Mutual\\
+\emph{Sum Upper} & the sum of both numbers equals the upper bound & Mutual (or not achievable)\\
+\emph{Less Upper} & the sum of both numbers is less than upper bound & Mutual (or not achievable)\\
+\bottomrule
+\end{tabular*}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table shows the possible values for the six parameters of the pre-committed family of games.
+The rightmost column indicates whether the bonus is mutually achievable (both players can receive it together) or competitive (only one player can receive it, if at all).
+The ``Sum Upper'' and ``Less Upper'' bonus rules are not achievable when the lower bound exceeds half the upper bound. 
+The naive Cartesian product of all parameter values yields 
+$20 \times 16 \times 4 \times 20 \times 6 \times 11 = 1{,}689{,}600$ combinations. 
+However, seven of the eleven bonus rules do not use the \textit{gap} parameter; for these rules, varying the gap value produces mechanically identical games. 
+Collapsing such duplicates leaves \TotalGames{} unique games in the final population $X$.
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+To illustrate how these parameters translate into actual games, consider the following example.
+If the lower bound is 5, upper bound is 14, gap is 6, bonus size is 10, points rule is \# - 2, and bonus rule is the Gap Abs. rule, participants see:
+\begin{quote}
+\vspace{-.5cm}
+\singlespacing
+\emph{You are going to play a game where you must select a whole number between \textbf{5 and 14}. A player will receive a number of points equivalent to \textbf{that number minus two}. After you tell us your number, we will randomly pair you with another Prolific worker who is also playing this same game. They will also have chosen a number between 5 and 14. Both players will receive \textbf{an additional 10 points} if their requested numbers \textbf{differ from each other by exactly 6}. What number would you request?}
+\end{quote}
+
+The full factorial product of this parameterization yields $1{,}689{,}600$ games.
+However, many of these games are mechanically identical because seven of the bonus rules do not use the \textit{gap} parameter.
+Accounting for these duplicates, we have \TotalGames{} unique games in total---the pool of candidate settings $X$.
+This family includes the original 11-20 game as a special case (lower bound 11, upper bound 20, bonus 20, gap 1, points rule \#, first bonus rule).
+Besides this and the other games in Section~\ref{sec:predict_new_AR}, to the best of our knowledge, all of these games are novel.
+They cannot be found in \textsc{Gpt-4o}'s training data---the model we use to generate AI responses.
+
+Notably, the games exhibit dramatic variation in strategic difficulty. 
+With bonus rules such as ``Unequal,'' the vast majority of strategy profiles lead to the bonus.
+Conversely, for rules like ``Sum Upper'' or ``Less Upper'' bonuses are sometimes unattainable (when the lower bound exceeds half the upper bound). 
+The games also vary in their incentive alignment between players.
+As indicated in the rightmost column of the bottom panel of Table~\ref{tab:game_parameters}, some bonus rules are mutually achievable, while others are competitive---only one player can receive the bonus.
+This heterogeneity creates a particularly stringent test of agents' predictive power, as successful generalization demands flexibility along multiple dimensions.
+
+To construct $S$, we randomly sampled \NGamesS{} games from $X$. 
+The intended design was uniform sampling for $\pi$ across all \TotalGames{} unique games. 
+A very minor miscalculation in the deduplication process caused small deviations from uniformity: the seven bonus rules that do not use the \textit{gap} parameter were each sampled with probability $\approx 0.086$, while the four gap-using bonus rules were each sampled with probability $\approx 0.010$.\footnote{This miscalculation was only noticed after the experiment. As such, the preregistration (aspredicted \#241394) states that we were sampling from a larger number of games. 
+The only difference is that the correct number is \TotalGames{}. The random sample of \NGamesS{} was still chosen before the experiment and is available here: \url{www.expectedparrot.com/content/db984e24-2810-4b21-be4e-91efde378e21}---the same link given in the preregistration.}
+For points rules, the ``costless'' variant was sampled with probability $\approx 0.095$, and each of the remaining rules with probability $\approx 0.18$. 
+All other parameters were sampled uniformly. 
+Consequently, the estimand in this section is technically the expected relative predictive power of the models over the \TotalGames{} games under this slightly non-uniform distribution.
+However, robustness checks will later show that the relative predictive power of the models is not particularly sensitive to the points rule or bonus rule, indicating that this minor departure from uniformity has no substantive effect on our conclusions.
+The results are therefore likely to hold for many distributions $\pi$ over $X$.

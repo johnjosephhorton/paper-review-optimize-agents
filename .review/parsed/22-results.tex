@@ -1,0 +1,59 @@
+\subsection{Results}
+
+The top panel of Figure~\ref{fig:ll_ratios} shows the estimation results.
+Each panel provides the histogram of the game-by-game log-likelihood ratios ($\hat \Lambda_s$) for each comparison.
+The vertical dashed black lines indicate the means of the log-likelihood ratios ($\bar \Lambda_S$), which are also given in the upper left corner of each panel.
+Bootstrapped standard errors are in parentheses.
+Green indicates ratios greater than zero, where the optimized AI has more predictive power, and red is the converse.
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{\textwidth}
+\caption{Predictive power of strategic \aisub{s} compared to other models ($\varepsilon = 0.2$)} 
+\label{fig:ll_ratios}
+\vspace*{-0.15in}
+\includegraphics[width=\textwidth]{plots/prop_ll_plots.pdf} 
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} The top panel shows the distribution of the log-likelihood ratios for each benchmark.
+The vertical black line indicates the mean, which is also provided in the upper left corner of each panel.
+The respective bootstrapped standard errors are in parentheses.
+Green indicates ratios greater than zero, where the optimized strategic AI has more predictive power, and red is the converse.
+The bottom panel shows the proportion of games for which the sample of strategic \aisub{s} is the best predictor of initial play. 
+Error bars are 95\% Clopper-Pearson confidence intervals
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+With $\varepsilon = 0.2$, the strategic sample of \aisub{} is, on average, significantly more predictive than any of the benchmarks ($p < 0.001$ for all comparisons).
+These differences are substantial.
+Starting with the leftmost panel, across all human observations in the dataset, the strategic sample of \aisub{s} achieves an average per-observation likelihood ratio of $e^{\BaselineBarLambda} = \ExpBaselineBarLambda$ in favor of the model, relative to the baseline~AI. 
+In other words, the likelihood of the observed human data under the strategic \aisub{} model is, on average, $\ExpBaselineBarLambda$ times larger per observation than under the baseline (i.e., \PctBaselineBarLambda\% more probability).
+
+Moving to the right, the corresponding average likelihood ratios are $e^{\CHBarLambda} = \ExpCHBarLambda$ compared to the cognitive hierarchy model (\PctCHBarLambda\% more probability) and $e^{\NashBarLambda} = \ExpNashBarLambda$ compared to the Harsanyi-Selten-selected equilibria ( \PctNashBarLambda\% more probability).
+To be clear, this means that the strategic \aisub{s} outperform the cognitive hierarchy model by a larger margin than they outperform the Harsanyi-Selten Nash equilibria.
+This is notable because throughout the literature, the cognitive hierarchy model has been a strong predictor of initial play in strategic games.
+It has been explicitly shown to ``explain why equilibrium theory predicts behavior well in some games and poorly in others'' \citep{Camerer2004Cognitive}.
+Of course, the cognitive hierarchy model might be more accurate with different values for $\tau$, but we had no way of knowing what these were ex ante---besides those from the literature---without the data sampled from the population we wanted to predict.
+Finally, the strategic \aisub{s} show a large gain compared to the random pure-strategy benchmark $e^{\PureRandBarLambda} = \ExpPureRandBarLambda$ (\PctPureRandBarLambda\% more probability), and a more modest but still significant advantage over the uniform distribution $e^{\UniformBarLambda} = \ExpUniformBarLambda$ (\PctUniformBarLambda\% more probability).
+
+The bottom panel of Figure~\ref{fig:ll_ratios} shows the proportion of games for which the sample of strategic \aisub{s} is the best predictor---i.e., has a positive log-likelihood ratio ($\sum_{s \in S} \mathbf 1\{\hat \Lambda_s > 0\} / |S|$).
+The results are consistent with the top panel.
+The theory-grounded sample of strategic \aisub{s} better predicts the human responses in more games than any other model.
+This proportion is large and significant for the baseline ($\BaselineHatP$).
+It is smaller, although still substantial, for both the cognitive hierarchy model ($\CHHatP$) and the Harsanyi-Selten Nash equilibria ($\NashHatP$).
+Because each game has only a small number of human observations ($m_s$ between 1 and 5), sampling noise in $\hat\Lambda_s$ mechanically attenuates this proportion toward 0.5, almost surely making these estimates highly conservative.
+Empirical Bayes shrinkage methods \citep[see][]{walters2024empirical} could partially correct for this, but we leave the unadjusted proportions for simplicity.
+This issue does not affect the sample averages $\bar\Lambda_S$ reported above, which remain unbiased.
+
+Tables in Appendix~\ref{app:robustness_checks} provide the same statistical analyses for $\varepsilon \in \{.05, 0.1, 0.3\}$, respectively.
+The above results are robust to these additional sensitivity checks.
+$\bar \Lambda_S > 0 $ for all comparisons, and the proportions of games for which the optimized \aisub{} is the best predictor are all greater than 50\%.
+
+Beyond relative comparisons, the strategic \aisub{s} demonstrate impressive absolute predictive accuracy.
+Without any smoothing, \OptHighestMatchRate\% of human respondents selected the strategy for which the optimized \aisub{} assigns the most density.
+Given that the number of possible strategies per game varied evenly between 5 and 20, this is notable.
+Furthermore, \OptTopThreeMatchRate\% of human respondents selected one of the top three strategies for which the strategic \aisub{} assigns the most density.
+And maybe most surprisingly, for \OptGameAllMatchRate\% of games, all human respondents selected a strategy within the support of the strategic \aisub{}.

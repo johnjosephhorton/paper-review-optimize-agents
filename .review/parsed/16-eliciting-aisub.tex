@@ -1,0 +1,11 @@
+\subsection{Eliciting \aisub{} responses}
+
+We generate AI responses for each of the \NGamesS{} games in the set $S$ using two distinct samples of \aisub{s}. 
+As a baseline sample, we prompt \textsc{Gpt-4o} at temperature 1 to independently play each game 100 times, without providing any additional instructions. 
+For the optimized strategic sample, we use the same 10 \persona{s} from Table~\ref{tab:persona}, which were optimized using human experimental data from \citeauthor{1120Arad2012}. 
+To generate this strategic sample, we proportionally scale the optimized persona weights to create a total of 100 \aisub{s}, each of which plays each game exactly once using \textsc{Gpt-4o} (the ``strategic'' sample of \aisub{s} hereinafter).\footnote{A very small fraction (less than 0.1\%) of the \aisub{} responses were invalid due to stochasticity inherent to the LLM at temperature 1. Following our preregistered analysis plan, we discard these invalid responses without resampling.}
+
+This procedure produces an empirical distribution for both the strategic level-$k$ sample $\hat P_{\bm\theta^*}$ and the baseline AI $\hat P_{0}$ for every game $s \in S$.
+These samples correspond exactly to those described in Section~\ref{sec:predict_new_AR} ($\hat P_{\bm\theta^*}$ and $\hat P_{0}$, respectively, in the notation of that section), differing only in the number of agents---here, each distribution is generated with 100 agents rather than 1,000.
+To be clear, these agents were constructed \emph{months} before they played any of the \NGamesS{} games.
+In total, the elicitation procedure produces approximately 300,000 individual \aisub{} responses.

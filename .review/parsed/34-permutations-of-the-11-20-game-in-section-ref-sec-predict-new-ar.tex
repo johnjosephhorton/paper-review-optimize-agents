@@ -1,0 +1,61 @@
+\subsection{Permutations of the 11-20 game in Section~\ref{sec:predict_new_AR}}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{1 \linewidth}
+\caption{Response Distributions for the Basic Version for the 11-20 Game with raw candidate responses} 
+\centering
+\vspace*{-0.15in}
+\label{fig:no_mix}
+\includegraphics[width=\textwidth]{plots/basic_1120_no_mix.pdf}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} This figure displays empirical PMFs for three samples playing the basic 11-20 money request game: human subjects from \citeauthor{1120Arad2012} (left panel), the naive baseline (center-left panel), responses from our selected \aisub{s} based on the weights in Table~\ref{tab:persona} (center-right panel), and responses based on the unweighted and evenly distributed \persona{s} in Table~\ref{tab:persona} (right panel).
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+
+\begin{table}[h!]
+\begin{center}
+\caption{Atheoretical \aisub{s} and resulting mixture weights} \label{tab:bad_personas}
+\scriptsize
+\input{tables/bad_personas.tex}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.05in}
+\emph{Notes:} This table displays three sets of arbitrary \persona{s}---each a different $\Theta$. 
+The weights columns display the optimized weights $\bm{w^*}$ when performing the selection method on the basic version of the 11-20 game.
+Weights sum to 1 within each set. 
+For the historical figures, each \persona{} is told \emph{``You are X''} where X is a historical figure.
+For the Myers-Briggs set, each \persona{} is also told that the four letters are in reference to the Myers-Briggs personality type indicator.
+\end{singlespace}
+\end{footnotesize}
+\end{table}
+
+\begin{figure}[h!]
+\begin{center}
+\begin{minipage}{1 \linewidth}
+\caption{Comparison of novel 1-10 for alternative distance metrics} 
+\centering
+\vspace*{-0.15in}
+\label{fig:dist_compare_1_10}
+\includegraphics[width=\textwidth]{plots/dist_compare_1_10.pdf}
+\end{minipage}
+\end{center}
+\begin{footnotesize}
+\begin{singlespace}
+\vspace*{-0.15in}
+\emph{Notes:} Reports the divergence between human and each AI distribution for the novel games across various additional distance metrics. 
+For three of the four metrics, the optimized strategic agents outperform the baseline. 
+Only in the costless version of the game, with the Earth Mover’s distance as the metric, is the baseline slightly better.
+\end{singlespace}
+\end{footnotesize}
+\end{figure}
+
+
+\newpage \clearpage

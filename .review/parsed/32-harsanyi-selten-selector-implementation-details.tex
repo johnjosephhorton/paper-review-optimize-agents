@@ -1,0 +1,52 @@
+\section{Harsanyi-Selten selector implementation details}
+\label{app:nash-selector}
+
+Let $E$ be the finite set of Nash equilibria of a simultaneous, two-player normal-form game that is symmetric, so that the row player's payoff matrix is $U$ and the column player's payoff matrix is $U^\top$.
+\cite{HarsanyiSelten1988}'s four-stage procedure deterministically selects a single equilibrium.
+For the vast majority of games in our setting, an equilibrium is selected in one of the first three steps.
+The fourth is barely used and is more a formality.
+
+Our implementation follows that blueprint with two minimal deviations that (1) protect symmetric components in the Pareto filter and (2) enforce symmetry in the reported profile after tracing.
+The procedure deterministically returns a single selection; in symmetric games, and when the tracing routine returns normally, the selected profile is symmetric.
+The code is or will soon be available at \url{https://benjaminmanning.io/}.
+The following pseudocode broadly outlines the procedure.
+
+\paragraph{Step 1 (component decomposition).}
+Two equilibria $e=(\sigma^r,\sigma^c)$ and $e'=(\tau^r,\tau^c)$ are adjacent when they differ in exactly one player's strategy.
+The connected components of the resulting graph---call them $C_1,\dots,C_K$---are the equilibrium components.
+
+\paragraph{Step 2 (Pareto filter with symmetry safeguard).}
+For each component $C_k$ compute its security vector $v(C_k)=\bigl(\min_{e\in C_k}u_1(e),\,\min_{e\in C_k}u_2(e)\bigr)$, where $u_1(e)=\sigma^{r\top}U\sigma^c$ and $u_2(e)=\sigma^{r\top}U^\top\sigma^c$.
+Delete $C_k$ if some $C_\ell$ is strictly better in both coordinates. 
+
+\paragraph{Step 3 (symmetry filter and risk dominance).}
+Discard all remaining components that contain no symmetric equilibrium.
+If multiple components survive, choose the one whose representative symmetric equilibrium (the first symmetric equilibrium encountered when iterating the component) minimizes the risk-dominance index
+\[
+R(\sigma)=\sum_{i\neq j}\sigma_i\sigma_j\,
+\bigl[U_{ii}-U_{ji}\bigr]\bigl[U_{ii}-U_{ij}\bigr].
+\]
+If two or more symmetric components attain exactly the same minimal value, we keep the first one encountered in iteration order.
+If no symmetric components remain after the symmetry filter, we select the first Pareto-surviving component as a fallback before Step~4.
+
+\paragraph{Step 4 (alpha-tracing).}
+Let the winning component be the one selected in Step~3 (or the
+first Pareto-surviving component if no symmetric component remains).
+\begin{itemize}
+\item If the winning component is a singleton that already contains a
+symmetric equilibrium, we return it directly (no tracing).
+\item Otherwise, we run Gambit's logit $\alpha$-tracing procedure on the full game---not restricted to the winning component---starting from the uniform prior. 
+We follow the path to $\alpha=1$ and take the resulting profile as the candidate equilibrium. 
+To guard against numerical asymmetries, we then enforce symmetry in the reported profile by setting $\sigma^{r}=\sigma^{c}$ equal to the traced row strategy.
+Because the prior and the game are symmetric, the traced profile is generically symmetric; the coercion is a safeguard.
+\item \emph{Deviation~2 (singleton asymmetric case).} If the winning
+component is a singleton asymmetric equilibrium, we run the same
+$\alpha$-tracing procedure and then report the coerced symmetric profile as above. 
+If the tracing routine raises an exception, the unique equilibrium is returned unchanged.
+\end{itemize}
+
+\renewcommand{\thefigure}{D\arabic{figure}} 
+\setcounter{figure}{0}  
+
+\renewcommand{\thetable}{D\arabic{table}} 
+\setcounter{table}{0}  

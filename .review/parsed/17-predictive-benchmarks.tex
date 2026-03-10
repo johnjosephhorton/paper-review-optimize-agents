@@ -1,0 +1,26 @@
+\subsection{Predictive benchmarks}
+\label{sec:nash-selector}
+
+A key limitation of our statistical framework is that comparing the predictive power of different AI simulations provides no absolute benchmark for how well these samples predict human responses in general. 
+Thus, we require a suitable theoretical or statistical benchmark for a more comprehensive analysis.
+However, due to the scale and heterogeneity of our games, several appealing benchmarks are impractical.
+
+Ideally, we would apply the standard level-$k$ model from Section~\ref{sec:predict_new_AR} to generate predictive distributions across these games. 
+Unfortunately, no existing mechanical method reliably identifies which choices correspond to specific levels of reasoning across such diverse contexts. 
+For example, the ``obvious'' choice for a level-$0$ player is not always the highest number---particularly when bonuses are large or the bonus rule involves selecting number 11. 
+Consequently, higher-level reasoning does not follow the intuitive progression featured by the original game in \citeauthor{1120Arad2012}.
+
+Another seemingly attractive alternative would be to follow the approaches of \cite{FudenbergLiang2019PredictPlay}, \cite{hirasawa2022using}, or \cite{andrews2025transfer}, which involve training a bespoke supervised machine learning model on past game data to predict responses. 
+However, this method is infeasible for our purposes because of two problems. 
+First, it relies heavily on having access to a large and representative dataset, which we currently do not possess.\footnote{The combined approach of \cite{zhu2025capturing}---using machine learning to flexibly estimate parameters in a well-defined behavioral model and then using that model to predict responses---is infeasible for the same reason.} 
+Second, as discussed in Section~\ref{sec:approach}, traditional machine learning models (e.g., regression, decision trees, or generic neural networks) are not well-suited for predicting human behavior in novel settings because they cannot adapt to structural differences across settings.
+Even with substantial representative data, if a game had even one new parameter value (e.g., a new bonus rule or an upper bound above the highest from the training data), the model would need to be retrained from scratch.
+
+We employ two complementary benchmarks that each address a different part of the above limitations.
+First, we use the cognitive hierarchy model of \cite{Camerer2004Cognitive}.
+Throughout the economics literature, it is one of the most empirically accurate predictors of human responses in one-shot strategic games.
+It can also produce predictions for all the structurally distinct games in $S$, but does require some prior information, which we discuss in the next subsection.
+Second, we use Nash equilibrium with Harsanyi-Selten selection, which requires no empirical calibration, but, along with most equilibrium concepts, has not been particularly successful at predicting initial human play for static games in the literature. 
+
+The challenge of finding an ideal benchmark actually highlights a unique strength of \aisub{s}: they can generate plausibly accurate predictions in virtually any setting without extensive training data or pre-specified behavioral parameters.
+To our knowledge, no other well-known benchmarks are both likely to have predictive accuracy and flexible enough to be applied to such a wide range of structurally distinct games.

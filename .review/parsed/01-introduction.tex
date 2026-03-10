@@ -1,0 +1,121 @@
+\section{Introduction} 
+\label{sec:introduction}
+
+A general, low-cost method for accurately simulating human behavior with AI agents would have wide application in the social sciences \citep{Charness2025NextGen,jackson2025ai,promising2025LLM}.
+Recognizing this potential, a growing literature explores whether large language models (LLMs) can simulate human responses in various settings.\footnote{\citep{argyle2022out,aher2022using,binz2023cognitive,brand2023using,park2023generative,
+jackson2024turing,1000agents2024park,chang2024networks,Manning2024Automated,
+capra2024llms,hansen2024simulating,kim2024homoeconomicus,
+wang2025market,Duch2025Possum,zhu2025evidence,Broska2025Mixed,
+bybee2025ghost,fish2025collusion}}
+Across dozens of experiments, samples of these agents respond with remarkable similarity to humans---even when simulating novel studies that did not appear in the underlying LLM's training corpus \citep{hewitt2024predictingLLM,binz2025centaur,ValidityLLM2024,Tranchero2024LLMtheorizing,suh2025finetuningscaled}.
+Yet within this literature, others find settings where the very same models are poor human proxies.\footnote{\citep{opinions2023Santukar,WhichHumans:2023,Cheng2023caricature,Gui2023Causal,gao2024caution}}
+This inconsistency poses a challenge for AI simulations as robust and credible predictive models---particularly in settings where no prior human data exists.
+The core challenge is not simply achieving a close match between AI and human responses in one setting, but building agents that will generalize reliably.
+
+A natural starting point is improving the instructions given to agents.
+These instructions, or ``\persona{s},'' are written descriptions given to the LLM specifying who it is, what it believes, or how it should behave and reason \citep{horton2023large}.
+Such second-person instructions (e.g., \emph{``You respond as type-X person''}) can profoundly affect output distributions because advanced LLMs have been explicitly fine-tuned to follow instructions \citep{bai2022helpfulharmless,ouyang2022training}.
+With an appropriate prompt (which can be massive),\footnote{To date, Google's Gemini 1.5 can accommodate 10 million tokens \citep{Gemini152024}. 
+This is roughly equivalent to 15{,}000 pages, or about 20 copies of the Handbook of Experimental Economics \citep{Kagel1995Handbook}.} highly capable models can perform complex reasoning and mathematical tasks at levels sometimes better even than those of highly skilled humans.
+
+Despite the existence of these powerful, steerable models, constructing agents whose behavior is similar to that of real humans in a wide variety of settings is nontrivial---even when human data are available to guide the search.
+The set of possible \persona{s} is vast, ranging from simple combinations of social or demographic traits to complex programmatic instructions related to how humans make decisions \citep{zhu2025ExplPredicting,Jackson2025Mixture}.
+As in other machine learning applications, the challenge is not only to avoid underfitting but also to guard against overfitting.
+By iterating through enough \persona{s}, one can almost always find some arbitrary \persona{} that shifts the LLM's responses to closely match a given human distribution.
+For example, an LLM instructed \emph{``you randomly offer between \$6 and \$9''} may perfectly reproduce a distribution of human responses in a \$20 dictator game, but such a \persona{} would be nonsensical for a \$5 dictator game.
+In contrast, a \persona{} grounded in the underlying behavioral drivers---e.g., \emph{``you are self-interested but fair''}---can perform well in-sample and plausibly extend to a range of allocation games.
+Standard data-driven approaches, such as a train-test split within a single dataset, cannot reliably distinguish between these two cases; the latter appears better only when tested in truly new settings.
+If the goal is to predict behavior in settings with no prior human data, how should researchers construct \persona{s}?
+
+In this paper, we build agents whose behavior in simulations usefully generalizes to what we see from humans across entire domains.
+Our approach mirrors what researchers generally try to do in social science, but in reverse. 
+Rather than testing a theory with empirical data, theory is embedded in agents (via natural language instructions), which are then used to generate candidate data.
+The theory and agent composition is then optimized to reduce error with respect to real-world data from a domain where predictions are desired.
+Human data from distinct but conceptually similar settings serve as held-out test sets or are incorporated into training to improve generalization.
+We show that ``general'' agents constructed and validated in this way can improve the predictive power of \aisub{s} in novel settings.
+Both steps are essential: without theoretical grounding, optimized \persona{s} may fail to meaningfully improve even in-sample predictions, and without cross-setting validation, they are prone to overfit.
+
+The approach uses two kinds of data: (i) \emph{training data}---existing human data used to optimize AI simulations, and (ii) \emph{validation} or \emph{test data}---existing human data related to but distinct from the training data, used to test whether the optimized agents generalize.
+The ultimate goal is to produce agents that can more accurately predict human behavior in novel \emph{target settings} where no prior human data exist, but that lie in the same broad domain as the training and validation settings.
+
+The first step of the approach is to limit the ``space'' of \persona{s} to a subset motivated by some economic theory or causal mechanism relevant to the novel setting of interest.
+This theory-grounding is analogous to constraining the functional form of the hypothesis class in machine learning.
+Continuing with the dictator game example, where social preferences likely determine behavior, one might choose the candidate set of \persona{s} characterized by known drivers of the relevant preferences (e.g., \emph{``You are \{level\}}'' for all \emph{levels} $\in$ \{\emph{self-interested but fair, altruistic, selfish}\}).
+
+The second step is to optimize over this set to best match the human training data.\footnote{There is an active literature on optimizing prompts \citep{khattab2024dspy}.}
+All candidate \persona{s} are put in simulations of the settings that produced the training data (e.g., a \$20 dictator game).
+Optimization effectively filters these candidate \persona{s} down to a final subset whose simulated responses are closest to the human training distribution.
+We employ two optimization methods: (i) a selection method that identifies the optimal mixture of \persona{s} from the candidate set \citep{leng2024calibrate,Jackson2025Mixture,bui2025mixture}, and (ii) a construction method that optimizes numerical parameters embedded directly in the prompts.
+If the final optimized set achieves a good in-sample fit, we have reason to believe they will generalize because they are also grounded in a relevant theory.
+Poor in-sample fit suggests a mismatch between the theory and the training setting or an inadequate operationalization of that theory.
+In this case, we revise the candidate \persona{s} and re-optimize.
+
+Given strong in-sample fit, we assess whether the final set of \persona{s} generalize using a train-test split approach inspired by the principles of invariant risk minimization \citep{Peters2016invariant,Heinze2018invariant,arjovsky2020invariant}.
+The final set of \persona{s} is placed in simulations of the settings that produced the human validation data, where we also expect the underlying theory to hold (e.g., optimize on a \$20 dictator game, but test on a \$5 dictator game).
+To be clear, this means the validation set necessarily comes from a distinct data-generating process from the one that produced the training data. 
+We then compare the predictions from these simulations to the relevant human distributions.
+By construction, sets of \persona{s} with strong test performance---those that accurately predict the validation data---are then those that capture generalizable relationships predictive of human behavior across contexts.
+Those that fail validation likely do not.
+Consequently, if the novel target setting is governed by the same theory or causal mechanism used to construct the optimized \persona{s} (e.g., the target is a \$50 dictator game), we may gain confidence that they will better predict human responses in that setting.
+
+We illustrate this approach and provide evidence of its efficacy with training and validation data drawn from experiments in the behavioral economics literature.
+All simulations use \textsc{Gpt-4o} with the temperature set to 1, though the approach is agnostic to the choice of model and hyperparameters.\footnote{\textsc{Gpt-4o}, among the most widely used LLMs, and the temperature setting are defaults for the software used to run our simulations \citep{Horton2024EDSL}.}
+We first apply the selection method to \citet{1120Arad2012}'s 11-20 money request game, where participants request an amount and receive a bonus if they choose exactly one less than their opponent. 
+We use only the original dataset from the paper, which contained fewer than 200 observations.
+This setting is appealing to study because optimal play depends not only on the focal agent's capabilities, but also on their beliefs about how others will reason.
+Endowing \aisub{s} with distinct \persona{s} corresponding to varying degrees of strategic reasoning (the theoretical focus of \citeauthor{1120Arad2012}) produces a mixture that closely matches the original human data.
+
+When we validate these optimized samples on distinct variants of the 11-20 money request game, they are better predictors of initial human play than baseline \aisub{s} with no additional instructions.
+By contrast, scientifically meaningless or ``atheoretical'' \aisub{s} derived from historical figures, pseudo-scientific Myers-Briggs personality types, and those instructed to select particular numbers can sometimes match human distributions in one variant of the game but fail to generalize across others.
+
+We next test the predictive power of the optimized agents in target settings where no prior human data exist.
+To do so, we construct four new games and collect responses from samples of preregistered crowdsourced participants \citep{horton2011online} on Prolific. 
+These games are derived from the original 11-20 game (and its variants), but adapted to other numeric ranges (1-10 and 1-7).
+The optimized sample of theory-grounded \persona{s} produces responses that predict the new human data far better than the off-the-shelf baseline.
+Prediction error is decreased by \MinPercImproveArad\%-\MaxPercImproveArad\% across the games.
+Furthermore, these simulations predict the results of the new experiments in some games \emph{better} than the most plausibly relevant human data from \citeauthor{1120Arad2012}; in one case, the KL divergence is halved.
+By contrast, the alignment of the atheoretical \persona{s}---which failed validation---with the new human data is often similar to or worse than the baseline AI.
+
+What statistical guarantees does this approach afford?
+Without a correctly specified causal model, no statistical procedure can guarantee performance in arbitrary new environments \citep{Pearl2009Causality}.  
+Formal guarantees with existing data, like those required for prediction-powered inference \citep{Angelopoulos2023Prediction} and other related methods \citep{Egami2023Using,Hardy2025Population}, would require a strictly firewalled validation set: data never used in the construction of the underlying LLM \citep{ludwig2025llmapplied,sarkar2024lookahead,ML2017Sendhil,spiess2025causaltext}.
+This is a tall order impossible to meet in practice, even with existing public weight LLMs, never mind private models. 
+However, what we can guarantee is prediction performance over a \emph{pre-committed} family of settings. 
+
+The setup is very similar to the theoretical framework of \cite{andrews2025transfer}, who study how well predictions from different economic and machine learning models transfer across economic domains.
+The first step is to establish a clearly defined space of experimental settings---for example, variants of public goods games, dictator games, or other allocation games differentiated by instructions, parameters, or other structural features.
+This idea is related to that in the literature on program evaluation and external validity, where population-level treatment effects can be estimated by randomizing over a defined set of possible samples \citep{Hotz2005PredictingEfficacy,Allcott2015Site,Dehejia2019External}.
+From this space, a random subset of settings is drawn and randomly assigned to human subjects, who provide responses.\footnote{This is also similar to the integrative experiment designs of \cite{20Q2024Almaatouq}.}
+By comparing these human responses with LLM-generated predictions, we can make externally valid estimates across the entire space.
+
+A key distinction from the setups laid out in \citeauthor{Hotz2005PredictingEfficacy}, \citeauthor{Allcott2015Site}, and \citeauthor{Dehejia2019External} is that appropriate coverage does not require that the family of settings share a data-generating process or that the underlying samples of human subjects are from the same population.
+Indeed, the variance of estimates naturally reflects how closely the held-out settings resemble those sampled.  
+If all scenarios are variants of a single setting---e.g., a dictator game with different monetary amounts---performance is tightly bounded; if they span disparate domains---e.g., many types of allocation games---estimates are likely less precise.
+Note that even if a setting inadvertently appears in the model's pre-training data, the random sampling procedure still accounts for its contribution---such cases may merely reduce prediction error.
+
+We explore this approach to inference by constructing a population of \TotalGames{} novel strategic games.
+These were inspired by the original 11-20 game but were modified along several dimensions, such as support of possible choices, the size and nature of the bonus, the manner in which money is allocated, etc. 
+The population of games is the full factorial combination of these dimensions.
+The resulting games differed substantively from each other; in some cases, they were cooperative, others zero-sum, many had a dominant strategy equilibrium, while some had no dominant strategies at all.
+The vast majority are surely not in any LLM's training corpus to date.
+From the population, we sample \NGamesS{} unique games and have \NParticipantS{} human subjects each play a game in a final preregistered experiment.
+We take the theoretically-grounded level-$k$ agents---agents constructed months before the novel set of \TotalGames{} games existed---and evaluate their ability to predict the human responses.
+
+The theory-grounded agents are significantly better predictors of initial human play than the baseline AI off-the-shelf.
+In the average game, they assign \PctBaselineBarLambda\% more probability to the actions actually taken by human subjects.
+The optimized agents are similarly effective compared to two well-established theoretical benchmarks: (i) a symmetric Nash equilibrium calculated for each of the 1,500 games (\PctNashBarLambda\% more probability), and (ii) the game-specific predictions from the cognitive hierarchy model of \cite{Camerer2004Cognitive} (\PctCHBarLambda\% more probability).
+Because the games were randomly sampled, the corresponding confidence intervals over the relative predictive power are externally valid for the much larger population.
+
+The goal of AI simulations in this paper is to harness two extensive sources of information to create better predictive agents: (i) well-established theoretical models from the social sciences, and (ii) the immense knowledge about human behavior that LLMs have implicitly learned during training \citep{lindsey2025biology,ameisen2025circuit}.
+In a sense, \aisub{s} are a general vessel through which theory can be flexibly applied to any setting.
+Our approach aims to generate such agents by conducting a structured trial run across various settings, building evidence that theoretically-grounded \persona{s} generalize effectively to similar yet distinct environments.
+These principles can be applied to any domain where relevant human data exists---even those with multiple interacting agents \citep{Manning2024Automated,qian2025strategicbargaining}.
+One can imagine iteratively identifying novel scenarios where predictions are needed, finding the closest relevant existing data, and continuously optimizing and calibrating agents as needed.\footnote{LLMs could automatically construct candidate \persona{s} as input to such feedback loops \citep{Jackson2025Mixture}.}
+Our main contribution is to systematize these ideas for constructing agents and then provide empirical evidence that they can substantially improve the predictive power of AI simulations in new settings.
+
+The remainder of this paper is organized as follows.
+Section~\ref{sec:approach} begins with a concrete example of identifying generalizable relationships and constructing \persona{s} that better predict human subjects in new settings.
+We then describe the approach more generally and specify the optimization methods.
+Section~\ref{sec:predict_new_AR} illustrates the approach and demonstrates its efficacy empirically with several experiments.
+Section~\ref{sec:ext-valid} demonstrates how agents can be used in a pre-committed setting to provide externally valid statistical estimates of predictive accuracy at scale.
+The paper concludes in Section~\ref{sec:conclusion}.

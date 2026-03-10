@@ -1,0 +1,32 @@
+\subsubsection{Harsanyi-Selten Nash equilibria as a benchmark}
+
+The second benchmark is symmetric Nash equilibria.
+Unlike the cognitive hierarchy model, this solution concept does not require any previous data to generate predictions.
+It is also flexible: symmetric Nash equilibria exist for any symmetric two-player game with a finite number of actions \citep{nash1951noncooperative}.
+They can be computed systematically across all game types in our dataset.
+Furthermore, in our setting, all games are played independently by participants (AI and human), making symmetry a natural assumption that suggests a ``consistent common belief'' across the population \citep{STAHL1994}.
+
+Since many games have multiple symmetric Nash equilibria, we require a systematic method to select a single equilibrium prediction. 
+Indeed, one game in $S$ has $\MaxSymmNash$ symmetric equilibria. 
+Unfortunately, there is no universally agreed-upon criterion for selecting the ``optimal'' symmetric equilibrium across all games \citep{camerer2003behavioral, tadelis2013game}.
+
+We employ a slightly modified version of the equilibrium selection procedure developed by \citet{HarsanyiSelten1988}, which provides a principled approach grounded in stability and focal-point considerations. 
+It guarantees the selection of a unique Nash equilibrium for every game in our dataset and can be slightly modified to ensure symmetry. 
+The procedure also prioritizes equilibria that are stable in the sense of \citet{schelling1960strategy}, specifically favoring equilibria that are either payoff dominant (maximizing joint welfare) or risk dominant (robust to strategic uncertainty). 
+This is appealing because many of the games---particularly those with bonus rules ``Equal'' or ``Coord. Low''---often have clear equilibria that are both payoff and risk dominant, which humans often choose \citep{camerer2003behavioral}. 
+
+The Harsanyi-Selten procedure operates through a multi-stage filtering process, progressively narrowing the set of candidate equilibria. 
+The procedure first identifies all Nash equilibria, then applies filters based on Pareto efficiency, symmetry requirements, and risk dominance, and finally employs tracing methods to resolve any remaining ties. 
+See the pseudocode in Appendix~\ref{app:nash-selector} for details on the implementation.
+
+We first use open-source software \citep{gambit2025} to calculate all Nash equilibria for the \NGamesS{} games in set $S$. 
+We then apply the Harsanyi-Selten procedure to each game's set of equilibria, producing a single equilibrium distribution for \GamesConverged{} of the games.\footnote{
+In fewer than 1\% of games, degeneracy issues prevented the code from converging.
+Following our preregistration, we discard these games in our analysis when comparing the equilibria to the strategic \aisub{s}.}
+Of these \GamesConverged{} games, \CountUniqueEq{} have unique symmetric equilibria.
+The selection procedure was unnecessary in these cases. 
+Among the remaining games with multiple symmetric equilibria, the procedure selects payoff-dominant equilibria---those Pareto superior to all alternatives---in \CountPayoffDomEq{} games, and risk-dominant equilibria in \CountRiskDomEq{} games. 
+Finally, $\PropSelectedPure$\% of the equilibria selected by the Harsanyi-Selten procedure have pure strategies, with the remainder employing mixed strategies.
+
+Similar to the predictions from the cognitive hierarchy model, the equilibrium distributions are highly diverse across games.
+This can be seen in Figure~\ref{fig:eq_plot} in the appendix, which is of the same format as Figure~\ref{fig:ch_plot}.

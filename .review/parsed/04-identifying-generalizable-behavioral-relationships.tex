@@ -1,0 +1,38 @@
+\subsection{Identifying generalizable behavioral relationships}
+
+As our motivating example illustrates, a traditional train-test split does not adequately guard against overfitting to a single data-generating process. 
+This approach is statistically valid only when training and testing samples are independently drawn from the same distribution \citep{statisticalvapnik1998}. 
+However, our objective differs fundamentally: we seek \persona{s} that remain predictive even when the underlying data-generating process shifts.
+By ``data-generating process,'' we refer specifically to the experimental setting (the environment in which behavior occurs), the population from which behavior is observed, and the outcomes they generate.
+In econometric terms, two processes diverge when the given input covariates appear with different distributions of values or when the covariates themselves are entirely different random variables.
+For example, a model trained on \$20 dictator games may fail on \$5 dictator games due to different stake values (covariate shift) or when moving from dictator to public goods games (structural shift).
+
+Without direct training data from the novel target setting, no standard statistical procedure ensures predictive accuracy \citep{ben2010theory,Klivans2024Domain}. 
+Theoretically, only a fully specified causal model could guarantee accurate predictions \citep{Pearl2009Causality}. 
+In practice, however, constructing or inferring such causal models generally requires strong, often unverifiable assumptions, which are rarely feasible in complex social science contexts.
+
+Instead, we propose leveraging principles from invariant risk minimization \citep{arjovsky2020invariant} to identify behavioral relationships that remain stable despite shifts in the data-generating process. 
+Rather than splitting a single dataset, we deliberately choose training data from one data-generating process (or several related processes) and validate using data from a related but distinct process from those used for training.
+\Persona{s} that consistently predict behavior across these distinct datasets likely capture generalizable, and possibly causal \citep{Peters2016invariant, Heinze2018invariant}, drivers of behavior.
+As a result, these validated \persona{s} should be more effective in predicting human responses in novel but theoretically similar settings.
+
+Returning to our motivating example, suppose we have additional human data from a \$5 dictator game, with observed offers \{1,1,1,2,2,2\}.
+Although stakes differ, both the \$20 and \$5 dictator games likely share a common decision-making process: individuals give slightly less than half the available amount, a reasonable balance more similar to what is observed in humans \citep{Henrich2001InSearch}.
+By using the  \$20 dictator game as training data and the \$5 dictator game for testing, we are implicitly filtering for \persona{s} based on their capacity to predict this proportional response.
+The earlier atheoretical prompt \emph{``You randomly choose numbers between 6 and 9,''} still fits the \$20 game perfectly, but clearly fails validation on the \$5 game.
+By contrast, the theory-grounded \persona{} \emph{``You are self-interested but fair,''} likely generalizes effectively across both settings, and most importantly, the novel public goods game.
+
+This validation process becomes even more robust when multiple distinct but theoretically-related datasets are available. 
+Imagine dictator-game responses from \$1, \$5, \$10, \$20, \$50, and \$100 games, all exhibiting offers slightly below half.
+Optimizing over multiple settings simultaneously further reduces the risk of overfitting. 
+With each new training data-generating process, it is less likely that an arbitrary prompt will generalize in-sample.\footnote{We do not offer empirical examples of optimizing over multiple training settings in the main text (only single settings in Section~\ref{sec:predict_new_AR}).
+Appendix~\ref{app:predict_new_CR} provides such analyses, including an additional preregistered experiment.}
+Thus, if the underlying relationship governing these settings also holds for a novel target setting, the validated \persona{s} should robustly predict behavior there as well.
+
+Yet, even with an effective validation method, a fundamental practical challenge remains: identifying the initial set of candidate \persona{s}. 
+While our motivating example made this step appear straightforward, selecting plausible \persona{s} in more complex settings can be far less obvious.
+In a perfect world, an optimization procedure would take in a massive set of prompts and filter them down to a smaller set that generalizes.
+However, this does not yet work in practice because many different prompts can be used to generate the same behavior in a given setting.
+For example, the number of possible natural language prompts that get an LLM to respond with numbers between 6 and 9 is enormous.
+If we were to start from a large pool of prompts, then the optimization procedure might endlessly produce sets of \persona{s} that fit in-sample but fail on the validation set.
+For now, it is essential to ground the candidate \persona{s} with a principled starting point, which---we argue and later demonstrate empirically---economic and behavioral theories offer.

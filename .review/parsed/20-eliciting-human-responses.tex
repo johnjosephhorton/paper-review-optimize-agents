@@ -1,0 +1,17 @@
+\subsection{Eliciting human responses}
+
+We collected human data from a sample of \NParticipantS{} Prolific workers using a custom online survey platform, which allows us to generate any game programmatically \citep{Horton2024EDSL}.
+This human data supplies $y_{s}$ for each game $s \in S$, with which we can then estimate the relative predictive power of the different AI models and benchmarks.
+The entire experimental design, all \aisub{} responses, and the statistical analysis in this section were preregistered before collecting the human subjects' data.\footnote{The sole exploratory analysis outside our preregistration is the comparison to the cognitive hierarchy model, added in response to suggestions we received after posting the paper online.}
+Each Prolific worker was randomly assigned one of the \NGamesS{} sampled games such that each game had approximately three human players.
+
+The survey flow began with a very simple attention check.
+Participants were then shown the rules of their assigned game.
+This was followed by a comprehension check, which asked participants to calculate the correct number of points for a hypothetical outcome of their game.
+They were then asked to make their strategic choice.
+Participants received a fixed payment of \$0.50 for completing the survey.
+To align incentives with the game structure, 1\% of participants were randomly awarded performance-based bonus payments, with each point earned in their assigned game converted to US dollars at a 1:1 rate.
+These bonuses were substantial, averaging \$23 across those who received them, with one participant earning \$48.
+
+After a preregistered filtering based on the first attention check, removing participants who timed out on our platform, or those who selected a final number outside of the range of their game or did not select a whole number, our final sample size was \SampleSizeHuman{}, each playing one of the  \SampleSizeGame{} unique games.
+These \SampleSizeGame{} games comprise the sample $S$ we use for analysis.

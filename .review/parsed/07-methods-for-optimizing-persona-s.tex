@@ -1,0 +1,50 @@
+\subsection{Methods for optimizing \persona{s} in-sample}
+
+We briefly describe two methods for optimizing \persona{s} with a given set of training data.
+The first, the selection method, assumes we have a finite library of candidate \persona{s} and selects (or mixes) them to best fit the training data. 
+We apply this method to the experiments presented in Section~\ref{sec:predict_new_AR} with data from \cite{1120Arad2012}.
+An early version of this idea was suggested by \cite{horton2023large}, and several others have since explored applications \citep{leng2024calibrate,Jackson2025Mixture,bui2025mixture}.
+The second, the construction method, parameterizes a prompt template with numeric trait dimensions and optimizes those parameters.
+To the best of our knowledge, this method is novel.
+An application of the method is presented in Appendix~\ref{app:predict_new_CR} using data from \cite{charness2002understanding}.
+
+\paragraph{Selection Method.}
+A finite set of unique candidate natural language \persona{s} is first specified. 
+For each \persona{} $\theta \in \Theta$, the LLM is used to generate a predictive distribution $\hat P_\theta$. 
+Let $P$ represent the observed ground-truth human distribution.
+The objective is to solve
+\[
+\min_{\mathbf{w}} \; d \Bigl(P, \sum_{\theta \in \Theta} w_\theta \,\hat P_\theta\Bigr) \quad \text{subject to} \quad \sum_{\theta \in \Theta} w_\theta = 1, \quad w_\theta \ge 0,
+\]
+where $d$ is a chosen distance measure (e.g., KL divergence or the mean absolute distance between distributions). 
+Once solved, these weights can be used to scale the appropriate mixture of \persona{s} (i.e., $\bm{\theta^{\star}}$) and applied to new settings.
+
+\paragraph{Construction Method.}
+Alternatively, a \persona{} template can be parameterized by numeric trait variables. 
+This is best illustrated with an example.
+Suppose $\phi_1$ and $\phi_2$ capture degrees of self-interest and inequity aversion, respectively. 
+The \persona{} could be:
+\begin{quote}
+\singlespacing
+\vspace{-.5cm}
+$\theta(\phi_1, \phi_2)$ = \emph{``You weigh your own payoff with weight $\{\phi_1\}$, and you dislike creating disadvantageous inequality at level $\{\phi_2\}$. Please respond accordingly.''}
+\end{quote}
+$\hat P_\theta$ denotes the distribution induced by the LLM under parameter vector $\theta = (\phi_1, \phi_2)$. 
+Given an observed human distribution $P$, the optimal parameters $\bm{\theta^{\star}}$ are found by solving $\min_{\theta} \; d \bigl(P, \hat P_\theta\bigr)$.
+In practice, this can be solved using any derivative-free optimization algorithm, such as Bayesian optimization or evolutionary algorithms.
+Note that one need not be limited to a single prompt; optimization can be solved using multiple templates or sets of agents with different values for the same template.
+
+\paragraph{Measuring Performance.}  
+Let $\hat P_{\bm{\theta^{\star}}}$ denote the LLM's distribution of responses under $\bm{\theta^{\star}}$, and $\hat P_0$ the baseline LLM off-the-shelf without any additional prompting.
+Training loss is $d(P, \hat P_{\bm{\theta^{\star}}})$ and validation loss is defined analogously on the held-out test setting. 
+
+To assess whether $\bm{\theta^{\star}}$ generalizes, we compare predictive fit against the baseline $\hat P_0$.  
+This is an appealing reference measure because many distance metrics between distributions (like the KL divergence) are not easily interpretable.
+Furthermore, improvement over the baseline provides direct evidence that designing and optimizing \persona{s} is a worthwhile endeavor in the first place.\footnote{Strong baseline performance would simply reflect the LLM's already high off-the-shelf predictive capacity.}
+
+Relative improvement can be computed as a difference-in-distances: $d\bigl(P, \hat P_{0}\bigr) \;-\; d\bigl(P, \hat P_{\bm{\theta^{\star}}}\bigr)$.
+A positive difference indicates that the \persona{s} provide better predictive power than the baseline.
+When we optimize over a set of candidate \persona{s}, we seek those that yield this positive difference on both the training and testing data---that would suggest that the set generalizes.
+
+The same framework applies across multiple training and evaluation settings, with optimization performed by averaging distances if needed.  
+It also allows direct comparison of optimized \persona{s} to alternative \persona{} sets or benchmark models (e.g., game-theoretic equilibria) using the same measurement tools.  

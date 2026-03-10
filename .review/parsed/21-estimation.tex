@@ -1,0 +1,40 @@
+\subsection{Estimation}
+\label{sec:estimation}
+
+We estimate the relative predictive power of the different AI samples and the theoretical benchmark in three steps.
+These are: (i) construct smoothed predictive distributions for each benchmark (besides the cognitive hierarchy model) in every sampled game; 
+(ii) evaluate the strategic sample of \aisub{s} compared to each other model with per-game log-likelihoods and their paired differences;
+(iii) attach sampling-error bounds that are externally valid for the full population of nearly one million games.
+We address these steps in turn.
+
+Many of the Harsanyi-Selten equilibria---mainly those pure strategies---and to a lesser extent the samples of \aisub{} place zero probability on strategies that humans sometimes take.
+For these models, the product of all likelihoods would be zero, making the log-likelihood $-\infty$ and violating Assumption~\ref{ass:response-support}.
+Dropping these games would heavily bias the results away from any pure strategy equilibria or the samples of \aisub{} where the agents mostly pick a single action---even when most people do select that action. 
+
+To address this, we follow the convention in game theory where players are assumed to follow the equilibrium strategy with probability $1-\varepsilon$ and choose uniformly at random the remaining $\varepsilon$ of the time.
+Mathematically, this is: $\tilde P_{\theta}(y\mid s) = (1-\varepsilon)\,\hat P_{\theta}(y\mid s) + \frac{\varepsilon}{K_{s}}$, where $K_{s}$ is the number of feasible actions in game~$s$.
+Setting $\varepsilon=0.2$ implies that players follow their model 80\% of the time and choose uniformly at random the remaining 20\%.
+We apply this smoothing to all models except the cognitive hierarchy model, which already incorporates random play and full support through its level-0 players (approximately 22\% when $\tau = 1.5$)---a feature specifically designed to capture this behavior \citep{Camerer2004Cognitive}.
+Further smoothing is therefore unnecessary for this benchmark.
+
+This additional smoothing is not without both empirical and theoretical support \citep{mckelvey1992experimental,mckelvey1995quantal}.
+In the original 11-20 money request game, \citeauthor{1120Arad2012} estimate that 32\% of participants choose uniformly at random in their best fitting model.
+In \citeauthor{STAHL1994}, at most one out of 40 participants is best explained by random choosing.
+Across these and other studies, the evidence suggests that between 20-30\% random play captures observed behavior well.
+We therefore report all main results with $\varepsilon = 0.2$ but provide robustness checks with $\varepsilon \in \{0.05, 0.1, 0.3\}$ in Appendix~\ref{app:figs}.
+
+For each game $s$, we calculate Equation~\ref{eq:sample-ratio} five times.
+In all five cases, $\theta'$---the numerator of the log-likelihood ratio $\hat \Lambda_s$---is the predictive distribution for the strategic sample of \aisub{s}.
+The denominator $\theta''$ is one of five benchmarks: (i) the baseline AI, (ii) the Poisson cognitive hierarchy model (with $\tau = 1.5$), (iii) the Harsanyi-Selten Nash equilibria, (iv) a uniform distribution over all possible strategies, or (v) a randomly selected pure strategy distribution.
+To be clear, this means all comparisons are made with respect to the strategic sample and $\hat \Lambda_s > 0$ implies the strategic sample is the best predictor of initial play for game $s$.
+We then take the average across the games to estimate $\bar \Lambda_S$ from Equation~\ref{eq:sample-avg-ratio} for each benchmark.
+
+Proposition \ref{prop:sample-valid} holds for each of these sample averages.
+Games were drawn via a known and fully supported distribution over the population $X$ (Assumption \ref{ass:rand-settings}).
+Human respondents were randomly assigned these games, and their answers were independent (Assumption \ref{ass:rand-humans}).
+Smoothing guarantees the first part of Assumption \ref{ass:response-support}, and the possible human responses form bounded, discrete distributions---so the required second-moment condition is satisfied.
+This means that confidence intervals must cover appropriately, and the results are externally valid for the population of all \TotalGames{} games.
+
+We report bootstrapped confidence intervals for the five $\bar\Lambda_S$ values and provide robustness checks with Wilcoxon and random-sign permutation tests.
+We also report the proportion of games for which the strategic \aisub{} is the best predictor---i.e. $\sum_{s \in S} \mathbf 1\{\hat \Lambda_s > 0\} / |S|$---with its exact Clopper-Pearson 95\% interval.
+Such intervals are valid following a nearly identical argument leading to Proposition~\ref{prop:sample-valid}.

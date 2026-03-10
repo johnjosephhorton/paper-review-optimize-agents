@@ -1,0 +1,30 @@
+\subsection{Constructing the sample of \aisub{s}}
+\label{sec:apply_prompt}
+
+CR hypothesize that a combination of efficiency concerns, inequity aversion, and self-interest is a key determinant of dictators' choices.
+To construct the sample of \aisub{s} to better match the human data from these six settings simultaneously, we build a prompt template that incorporates these three traits as our theoretical motivation for the agents.
+Specifically, we parameterize each trait in the following prompt: 
+\begin{quote}
+\vspace{-.5cm}
+\singlespacing
+$\theta(\phi_{eff}, \phi_{self}, \phi_{ineq})$ = \emph{On a scale from 1 to 10, your efficiency level is: \{\(\phi_{eff}\)\}. 
+10 means you strongly prioritize maximizing combined payoffs, and 1 means you don't care.
+On a scale from 1 to 10, your self-interest level is: \{\(\phi_{self}\)\}. 
+10 means you strongly prioritize your own payoffs, and 1 means you don't care.
+On a scale from 1 to 10, your inequity aversion level is: \{\(\phi_{ineq}\)\}. 
+10 means you strongly prioritize fairness between players, and 1 means you don't care.}
+\end{quote}
+
+Our goal is to identify the parameter vector (or combination of vectors) that generates AI response distributions closely matching the observed human data.
+To do this, we create sets of $k=3$ agents, each with a distinct parameter vector $\bm{\phi}$. 
+Thus, each agent's \persona{} is $\theta(\bm{\phi})$, where
+$\bm{\phi} \;=\; (\phi_{eff},\,\phi_{self},\,\phi_{ineq})$.
+We begin by randomly sampling 5 triples from the feasible space $\Phi = \{1,\dots,10\}^3$.
+For each sampled combination, we query the model 30 times per agent, producing the empirical distribution of responses $P$.
+
+We then employ Bayesian optimization to iteratively search the parameter space, evaluating an additional 15 sets of parameter combinations (for a total of 20). 
+Using mean absolute error to measure divergence from human data, this optimization identifies the optimal parameter vectors as:
+$\bigl(\bm{\phi}_1^*,\,\bm{\phi}_2^*,\,\bm{\phi}_3^*\bigr) \;=\; \bigl(\,(7,\,10,\,10),\;(3,\,1,\,3),\;(1,\,10,\,2)\bigr)$.
+Assigning these parameters to three \aisub{s} forms the optimized sample $\bm{\theta}^*$. 
+As shown by the blue bars in Figure~\ref{fig:cr_train}, the resulting distribution aligns much closer with the human responses: $\frac{1}{6}\sum_{s \in S} d(P_s,\hat P_{\bm{\theta}^*})=\CROptTrainMAE$.
+This divergence represents a significant improvement, more than halving the baseline AI's error (MAE = \CRBaselineTrainMAE).
