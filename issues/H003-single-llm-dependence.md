@@ -1,13 +1,17 @@
 ---
-id: "H003"
-title: "Dependence on a single LLM (GPT-4o) raises generalizability concerns"
-type: logical
+agreement: 0.67
+category: methodology
+id: H003
 location:
-  file: "paper/writeup/optimize.tex"
-  lines: [194, 194]
-source_job: "holistic"
+  file: paper/writeup/optimize.tex
+  lines:
+  - 194
+  - 194
 models_flagged: []
-category: "methodology"
+severity: moderate
+source_job: holistic
+title: Dependence on a single LLM (GPT-4o) raises generalizability concerns
+type: logical
 ---
 
 # Dependence on a single LLM (GPT-4o) raises generalizability concerns
@@ -31,3 +35,13 @@ The claim of model-agnosticism is asserted but not demonstrated. All experiments
 ## Suggested fix
 
 Add a robustness check with at least one alternative LLM, or soften the model-agnosticism claim.
+
+## Severity votes
+
+| Model | Severity | Reasoning |
+|-------|----------|-----------|
+| claude-sonnet-4-6 | moderate | ## Severity Rating: **Moderate** |
+| gpt-4o | major | I would rate the severity of this issue as moderate. While the claim of model-agnosticism is central to the paper's generalizability and applicability, the lack of evidence supporting this claim undermines the credibility of the results. Addressing this issue by testing alternative models or revising the claim is important to strengthen the paper's findings and conclusions. |
+| gemini-2.5-pro | moderate | **Rating: Medium Severity** |
+
+**Consensus: moderate** (1/3 major, 2/3 moderate)

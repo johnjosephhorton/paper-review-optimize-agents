@@ -1,0 +1,17 @@
+[
+  {
+    "model": "claude-sonnet-4-6",
+    "severity": "minor",
+    "reasoning": "**Severity: Low**"
+  },
+  {
+    "model": "gpt-4o",
+    "severity": "moderate",
+    "reasoning": "I would rate the severity of this issue as moderate. While the omission of bootstrap implementation details does not invalidate the results, it does hinder the reproducibility and transparency of the analysis. Including these details is essential for readers to fully understand and evaluate the robustness of the findings."
+  },
+  {
+    "model": "gemini-2.5-pro",
+    "severity": "moderate",
+    "reasoning": "**Severity Rating: Moderate**"
+  }
+]

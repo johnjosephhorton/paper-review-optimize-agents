@@ -1,14 +1,19 @@
 ---
-id: "H001"
-title: "Theory-grounding requirement may be more restrictive than acknowledged"
-type: logical
+agreement: 1.0
+category: scope-and-limitations
+id: H001
 location:
-  file: "paper/writeup/optimize.tex"
-  lines: [384, 388]
-source_job: "holistic"
+  file: paper/writeup/optimize.tex
+  lines:
+  - 384
+  - 388
 models_flagged: []
-category: "scope-and-limitations"
-related_issues: ["H010"]
+related_issues:
+- H010
+severity: moderate
+source_job: holistic
+title: Theory-grounding requirement may be more restrictive than acknowledged
+type: logical
 ---
 
 # Theory-grounding requirement may be more restrictive than acknowledged
@@ -33,3 +38,13 @@ The paper's evidence comes exclusively from settings with well-established, clea
 ## Suggested fix
 
 Add a paragraph in the conclusion discussing the approach's limitations when well-specified theories are unavailable.
+
+## Severity votes
+
+| Model | Severity | Reasoning |
+|-------|----------|-----------|
+| claude-sonnet-4-6 | moderate | ## Severity Rating: **3/5 (Moderate)** |
+| gpt-4o | moderate | I would rate the severity of this issue as moderate. While the paper acknowledges the challenge of applying its approach in settings without well-defined theoretical models, it does so only superficially and fails to explore the implications or provide guidance for such scenarios. This omission could limit the paper's applicability and relevance to a broader range of real-world problems where clean theoretical structures are not always present. Adding a discussion on these limitations would enhance the paper's robustness and utility. |
+| gemini-2.5-pro | moderate | **Severity: 4/5 (Major Issue)** |
+
+**Consensus: moderate** (3/3 moderate)

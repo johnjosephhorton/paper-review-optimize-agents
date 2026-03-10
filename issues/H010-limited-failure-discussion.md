@@ -1,14 +1,19 @@
 ---
-id: "H010"
-title: "Limited discussion of when AI agents might systematically fail"
-type: logical
+agreement: 0.67
+category: scope-and-limitations
+id: H010
 location:
-  file: "paper/writeup/optimize.tex"
-  lines: [1386, 1423]
-source_job: "holistic"
+  file: paper/writeup/optimize.tex
+  lines:
+  - 1386
+  - 1423
 models_flagged: []
-category: "scope-and-limitations"
-related_issues: ["H001"]
+related_issues:
+- H001
+severity: major
+source_job: holistic
+title: Limited discussion of when AI agents might systematically fail
+type: logical
 ---
 
 # Limited discussion of when AI agents might systematically fail
@@ -34,3 +39,13 @@ The conclusion is almost entirely positive, with failure mentioned only as a bri
 ## Suggested fix
 
 Add a limitations paragraph in the conclusion discussing: (1) domains where clean theories are absent, (2) settings where LLM training data may introduce systematic biases, (3) how to detect when the approach is failing.
+
+## Severity votes
+
+| Model | Severity | Reasoning |
+|-------|----------|-----------|
+| claude-sonnet-4-6 | moderate | ## Severity Rating: **Moderate (3/5)** |
+| gpt-4o | major | I would rate the severity of this issue as moderate. While the paper provides a generally positive view of the approach, the lack of a dedicated discussion on potential failures or limitations could lead practitioners to overestimate its applicability and effectiveness. Addressing these gaps is crucial for ensuring that users are aware of the conditions under which the approach may not perform well, which is essential for responsible and informed application of AI technologies. |
+| gemini-2.5-pro | major | **Severity Rating: Major** |
+
+**Consensus: major** (2/3 major, 1/3 moderate)

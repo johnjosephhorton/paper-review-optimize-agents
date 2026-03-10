@@ -1,13 +1,17 @@
 ---
-id: "H006"
-title: "Small number of human observations per game (~3) limits game-level inference"
-type: technical
+agreement: 0.67
+category: methodology
+id: H006
 location:
-  file: "paper/writeup/optimize.tex"
-  lines: [1204, 1210]
-source_job: "holistic"
+  file: paper/writeup/optimize.tex
+  lines:
+  - 1204
+  - 1210
 models_flagged: []
-category: "methodology"
+severity: major
+source_job: holistic
+title: Small number of human observations per game (~3) limits game-level inference
+type: technical
 ---
 
 # Small number of human observations per game (~3) limits game-level inference
@@ -32,3 +36,13 @@ With only ~3 humans per game, the estimated human distribution for any single ga
 ## Suggested fix
 
 Add a simulation or power analysis showing how the proportion metric converges as humans per game increases.
+
+## Severity votes
+
+| Model | Severity | Reasoning |
+|-------|----------|-----------|
+| claude-sonnet-4-6 | moderate | ## Severity Rating: **3/5 (Moderate)** |
+| gpt-4o | major | I would rate the severity of this issue as moderate. The small number of human observations per game significantly limits the reliability and precision of game-level inferences, which can undermine the validity of the study's conclusions. However, the issue could potentially be addressed by adding a simulation or power analysis to quantify the impact and guide future research, rather than requiring a complete redesign of the study. |
+| gemini-2.5-pro | major | **Severity Rating: 4/5 (Substantial Issue)** |
+
+**Consensus: major** (2/3 major, 1/3 moderate)

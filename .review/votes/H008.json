@@ -1,0 +1,17 @@
+[
+  {
+    "model": "claude-sonnet-4-6",
+    "severity": "moderate",
+    "reasoning": "## Severity Rating: **3 – Moderate**"
+  },
+  {
+    "model": "gpt-4o",
+    "severity": "major",
+    "reasoning": "I would rate the severity of this issue as moderate. The inconsistent application of Chain-of-Thought (CoT) prompting across different agent types can significantly impact the validity of the study's findings, as it introduces a potential confound that may skew performance comparisons. Addressing this issue is crucial to ensure that any observed differences in agent performance are genuinely due to theoretical grounding rather than the differential use of CoT prompting."
+  },
+  {
+    "model": "gemini-2.5-pro",
+    "severity": "major",
+    "reasoning": "**Severity Rating: 3/3 (Major issue)**"
+  }
+]

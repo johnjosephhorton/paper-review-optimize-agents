@@ -1,0 +1,17 @@
+[
+  {
+    "model": "claude-sonnet-4-6",
+    "severity": "moderate",
+    "reasoning": "## Severity Rating: **3/5 (Moderate)**"
+  },
+  {
+    "model": "gpt-4o",
+    "severity": "major",
+    "reasoning": "I would rate the severity of this issue as moderate. The small number of human observations per game significantly limits the reliability and precision of game-level inferences, which can undermine the validity of the study's conclusions. However, the issue could potentially be addressed by adding a simulation or power analysis to quantify the impact and guide future research, rather than requiring a complete redesign of the study."
+  },
+  {
+    "model": "gemini-2.5-pro",
+    "severity": "major",
+    "reasoning": "**Severity Rating: 4/5 (Substantial Issue)**"
+  }
+]
