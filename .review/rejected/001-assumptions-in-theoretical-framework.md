@@ -1,4 +1,5 @@
 ---
+
 id: "001"
 title: "Assumptions in Theoretical Framework"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "section"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Assumptions in Theoretical Framework
 

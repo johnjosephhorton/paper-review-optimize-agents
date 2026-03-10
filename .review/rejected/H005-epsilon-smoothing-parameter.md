@@ -1,4 +1,5 @@
 ---
+
 id: "H005"
 title: "ε = 0.2 smoothing parameter is consequential and could be explored more"
 type: technical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "holistic"
 models_flagged: []
----
+verdict: rejected---
+
 
 # ε = 0.2 smoothing parameter is consequential and could be explored more
 

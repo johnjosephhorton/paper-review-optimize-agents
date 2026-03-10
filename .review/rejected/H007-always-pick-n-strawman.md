@@ -1,4 +1,5 @@
 ---
+
 id: "H007"
 title: "Always Pick N persona set is a somewhat strawman comparison"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "holistic"
 models_flagged: []
----
+verdict: rejected---
+
 
 # "Always Pick N" persona set is a somewhat strawman comparison
 

@@ -1,4 +1,5 @@
 ---
+
 id: "H004"
 title: "Sampling miscalculation in 1,500-game experiment deserves more discussion"
 type: technical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "holistic"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Sampling miscalculation in 1,500-game experiment deserves more discussion
 

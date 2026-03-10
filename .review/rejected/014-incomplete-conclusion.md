@@ -1,4 +1,5 @@
 ---
+
 id: "014"
 title: "Incomplete Conclusion"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Incomplete Conclusion
 

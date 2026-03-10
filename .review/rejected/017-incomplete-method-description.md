@@ -1,4 +1,5 @@
 ---
+
 id: "017"
 title: "Incomplete Method Description"
 type: technical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Incomplete Method Description
 

@@ -1,4 +1,5 @@
 ---
+
 id: "003"
 title: "Incomplete Equation for Variance"
 type: technical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "section"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Incomplete Equation for Variance
 

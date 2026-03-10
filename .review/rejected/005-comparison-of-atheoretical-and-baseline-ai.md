@@ -1,4 +1,5 @@
 ---
+
 id: "005"
 title: "Comparison of atheoretical and baseline AI"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "section"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Comparison of atheoretical and baseline AI
 

@@ -1,4 +1,5 @@
 ---
+
 id: "008"
 title: "Lack of Control for Confounding Variables"
 type: technical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Lack of Control for Confounding Variables
 

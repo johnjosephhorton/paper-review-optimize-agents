@@ -1,4 +1,5 @@
 ---
+
 id: "010"
 title: "Overfitting Risk in Persona Optimization"
 type: technical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Overfitting Risk in Persona Optimization
 

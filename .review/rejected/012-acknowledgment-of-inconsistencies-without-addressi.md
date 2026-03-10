@@ -1,4 +1,5 @@
 ---
+
 id: "012"
 title: "Acknowledgment of Inconsistencies without Addressing Alternative Explanations"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Acknowledgment of Inconsistencies without Addressing Alternative Explanations
 

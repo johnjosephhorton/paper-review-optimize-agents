@@ -1,4 +1,5 @@
 ---
+
 id: "015"
 title: "Overclaiming Predictive Power"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Overclaiming Predictive Power
 

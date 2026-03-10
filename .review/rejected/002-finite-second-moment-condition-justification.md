@@ -1,4 +1,5 @@
 ---
+
 id: "002"
 title: "Finite Second-Moment Condition Justification"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "section"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Finite Second-Moment Condition Justification
 

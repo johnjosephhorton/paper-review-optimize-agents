@@ -1,4 +1,5 @@
 ---
+
 id: "016"
 title: "Lack of Evidence for Reliability Concerns"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Lack of Evidence for Reliability Concerns
 

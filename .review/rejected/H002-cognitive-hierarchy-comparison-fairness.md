@@ -1,4 +1,5 @@
 ---
+
 id: "H002"
 title: "Comparison to cognitive hierarchy model may not be entirely fair"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "holistic"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Comparison to cognitive hierarchy model may not be entirely fair
 

@@ -1,4 +1,5 @@
 ---
+
 id: "006"
 title: "Lack of detail on performance improvement"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "section"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Lack of detail on performance improvement
 

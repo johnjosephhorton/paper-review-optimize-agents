@@ -1,4 +1,5 @@
 ---
+
 id: "007"
 title: "Assumption of Similar Mechanisms in Training and Target Settings"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Assumption of Similar Mechanisms in Training and Target Settings
 

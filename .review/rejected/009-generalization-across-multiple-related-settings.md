@@ -1,4 +1,5 @@
 ---
+
 id: "009"
 title: "Generalization Across Multiple Related Settings"
 type: logical
@@ -7,7 +8,8 @@ location:
   lines: []
 source_job: "crosscut"
 models_flagged: []
----
+verdict: rejected---
+
 
 # Generalization Across Multiple Related Settings
 
