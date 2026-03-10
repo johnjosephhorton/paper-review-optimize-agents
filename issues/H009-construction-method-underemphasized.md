@@ -46,3 +46,15 @@ Add discussion of when to prefer selection vs. construction method, or move one 
 | gemini-2.5-pro | moderate | **Severity Rating:** High |
 
 **Consensus: moderate** (1/3 minor, 2/3 moderate)
+
+## Draft author response
+
+**Recommended action**: acknowledge
+
+**Response draft**:
+
+We agree that the construction method could benefit from more discussion. We have added a sentence at the end of Section 2.4 noting when each method is preferable.
+
+**Manuscript changes**:
+
+- `writeup/optimize.tex` after line 458 (end of construction method paragraph): Add: "In general, the selection method is preferable when the researcher has a discrete set of qualitatively distinct candidate \persona{s} (e.g., different reasoning types), while the construction method is better suited when behavior can be parameterized along continuous dimensions (e.g., degrees of altruism or risk aversion). The construction method may also be more sample-efficient when the candidate space is high-dimensional, as Bayesian optimization can explore it more systematically than enumeration."

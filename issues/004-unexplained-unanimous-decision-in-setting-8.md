@@ -46,3 +46,15 @@ Add a note acknowledging that setting 8 has a dominated Option B ($0.00 to all p
 | gemini-2.5-pro | moderate | **Severity: 3/5 (Moderate)** |
 
 **Consensus: moderate** (3/3 moderate)
+
+## Draft author response
+
+**Recommended action**: fix
+
+**Response draft**:
+
+We thank the reviewer for this observation. Setting 8 features Option B = ($0.00 to all players), making Option A trivially dominant. We have added a parenthetical noting this.
+
+**Manuscript changes**:
+
+- `writeup/optimize.tex` line 1692: Change "except for the extreme setting 8, where participants unanimously select Option A." to "except for setting 8, where participants unanimously select Option A (Option B yields \$0.00 to all players, making Option A trivially dominant)."

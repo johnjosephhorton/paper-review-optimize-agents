@@ -47,3 +47,15 @@ Add a brief note in the estimation section or a footnote specifying B=1000 boots
 | gemini-2.5-pro | moderate | **Severity Rating: Moderate** |
 
 **Consensus: moderate** (1/3 minor, 2/3 moderate)
+
+## Draft author response
+
+**Recommended action**: fix
+
+**Response draft**:
+
+We have added a footnote specifying the bootstrap implementation details.
+
+**Manuscript changes**:
+
+- `writeup/optimize.tex` line 1254: After "We report bootstrapped confidence intervals for the five $\bar\Lambda_S$ values" add footnote: "\footnote{Bootstrap standard errors are computed from $B = 1{,}000$ resamples. In each resample, we draw $n$ games with replacement from $S$ and recompute $\bar\Lambda_S$. The standard error is the standard deviation of these $B$ bootstrap means.}"

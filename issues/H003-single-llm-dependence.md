@@ -45,3 +45,15 @@ Add a robustness check with at least one alternative LLM, or soften the model-ag
 | gemini-2.5-pro | moderate | **Rating: Medium Severity** |
 
 **Consensus: moderate** (1/3 major, 2/3 moderate)
+
+## Draft author response
+
+**Recommended action**: acknowledge
+
+**Response draft**:
+
+We agree that testing with additional models would strengthen the paper. We have softened the model-agnosticism claim and noted this as a limitation.
+
+**Manuscript changes**:
+
+- `writeup/optimize.tex` line 194: Change "though the approach is agnostic to the choice of model and hyperparameters" to "though the approach is in principle applicable to any sufficiently capable model. We leave cross-model robustness checks to future work"

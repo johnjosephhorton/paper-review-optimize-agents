@@ -49,3 +49,15 @@ Add a limitations paragraph in the conclusion discussing: (1) domains where clea
 | gemini-2.5-pro | major | **Severity Rating: Major** |
 
 **Consensus: major** (2/3 major, 1/3 moderate)
+
+## Draft author response
+
+**Recommended action**: fix
+
+**Response draft**:
+
+We agree that a more explicit discussion of failure modes would strengthen the paper. We have added a limitations paragraph before the final paragraph of the conclusion.
+
+**Manuscript changes**:
+
+- `writeup/optimize.tex` before line 1417 (before "More generally..."): Add new paragraph: "Several important limitations should be noted. First, our approach requires relevant human data from settings that plausibly share behavioral mechanisms with the target domain—a requirement that may be difficult to satisfy in domains lacking established experimental paradigms. Second, all experiments use a single LLM (\textsc{Gpt-4o}), and the degree to which results transfer across models remains an open question. Third, our approach is likely to fail when the relevant theory is severely misspecified, when human behavior is driven by context-specific cultural norms not captured by any general theory, or when the LLM's training data introduces systematic biases in particular domains. Practitioners should be alert to poor in-sample fit (suggesting a mismatch between theory and setting) and inconsistent validation results across related settings (suggesting the \persona{s} are not capturing stable behavioral patterns) as diagnostic signals."

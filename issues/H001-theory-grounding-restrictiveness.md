@@ -48,3 +48,15 @@ Add a paragraph in the conclusion discussing the approach's limitations when wel
 | gemini-2.5-pro | moderate | **Severity: 4/5 (Major Issue)** |
 
 **Consensus: moderate** (3/3 moderate)
+
+## Draft author response
+
+**Recommended action**: acknowledge
+
+**Response draft**:
+
+We agree that our empirical evidence comes from domains with well-established theories (strategic reasoning and social preferences). We have added a sentence in the conclusion acknowledging this limitation.
+
+**Manuscript changes**:
+
+- `writeup/optimize.tex` after line 1405: Add: "We note that our empirical demonstrations rely on domains where well-established behavioral theories exist. In settings where theories are vague, contested, or absent---such as complex labor market behavior or political decision-making---identifying appropriate candidate \persona{s} may be substantially more challenging. In such cases, one could use LLMs to propose candidate theories or draw on multiple competing models, though the efficacy of this strategy remains to be tested."

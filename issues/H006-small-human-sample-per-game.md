@@ -46,3 +46,11 @@ Add a simulation or power analysis showing how the proportion metric converges a
 | gemini-2.5-pro | major | **Severity Rating: 4/5 (Substantial Issue)** |
 
 **Consensus: major** (2/3 major, 1/3 moderate)
+
+## Draft author response
+
+**Recommended action**: rebut
+
+**Response draft**:
+
+We appreciate this concern, but we believe the paper's design already addresses it through the statistical framework in Section 4.1. The key insight is that inference is over the *population of games*, not over individual games. The population-level estimand $\bar\Lambda$ is estimated by averaging $\hat\Lambda_s$ across 1,500 games, and each $\hat\Lambda_s$ is an unbiased estimator of $\Lambda(s)$ regardless of $m_s$. The asymptotic variance in Proposition 1 explicitly decomposes into cross-game heterogeneity and within-game sampling noise, and the latter shrinks proportionally with $m_s$. As we note in the text (lines 978-981), "once a few human observations are obtained per setting, the precision of $\bar\Lambda_S$ is governed primarily by $n$." The design deliberately prioritizes breadth (1,500 games) over depth (~3 humans per game) because the population-level comparison—not game-level inference—is the estimand of interest. We already acknowledge (lines 1304-1306) that the proportion-of-games metric is attenuated toward 0.5 by within-game noise, making our reported proportions conservative. A simulation exercise could quantify this attenuation, but we believe the current discussion makes the tradeoff transparent.
